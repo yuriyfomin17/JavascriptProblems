@@ -27,18 +27,19 @@ class BinaryTree {
 
 
 function insertLevelOrder(arr, root, i, n) {
-    if(arr[i]===null || i === n){
-        return  null
+    if (arr[i] === null || i === n) {
+        ++i
+        return null
     }
-    if (i <=n) {
-
-        let temp = new Node(arr[i])
-        root = temp
-        root.left = insertLevelOrder(arr, root, 2 * i + 1, n)
-        root.right = insertLevelOrder(arr, root, 2 * i + 2, n)
 
 
-    }
+    let temp = new Node(arr[i])
+    ++i
+    root = temp
+    root.left = insertLevelOrder(arr, root, i, n)
+    root.right = insertLevelOrder(arr, root, i, n)
+
+
     return root
 }
 
