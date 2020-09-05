@@ -28,3 +28,23 @@ MovingAverage.prototype.next = function (val) {
 }
 
 // Approach 2: Double-ended Queue
+
+const MovingAverage2 = function (k) {
+    this.size = k
+    this.queue = []
+    this.windowSum = 0
+    this.count = 0
+}
+
+MovingAverage2.prototype.next = function (val) {
+    this.count += 1
+    this.queue.push(val)
+    let tail;
+    if (this.count > this.size) {
+        tail = this.queue.pop()
+    } else {
+        tail = 0
+    }
+    this.windowSum = this.windowSum - tail + val
+    return this.windowSum / Math.min(this.count, this.size)
+}
