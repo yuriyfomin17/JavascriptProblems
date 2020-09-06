@@ -13,36 +13,52 @@
 // the distance from the starting point. It also implicitly tell us whether a position had been visited
 // so it won't be inserted into the queue again.
 
+function isSafe(rooms, currRow, currColumn) {
+    return currColumn >= 0 && currColumn < rooms[0].length && currRow >= 0 && currRow < rooms.length
+}
 
 const wallsAndGates = function (rooms) {
-    const queue = []
-    rooms.map(function (element, row) {
-        element.map(function (el, column) {
-            let pos = [row, column, el]
-            if (el === 0) {
-                queue.push(pos)
-            }
-        })
-    })
-    while (queue.length !== 0) {
-        let currElem = queue.unshift()
-        let row = currElem[0]
-        let column = currElem[1]
-        let dest = currElem[2]
-        for (let row = 0; row < rooms.length; ++row) {
-            for (let column = 0; column < rooms[row].length; ++column) {
-                let source = rooms[row][column]
-                for (let sourceRow = 0; sourceRow < rooms.length; ++sourceRow) {
-                    for (let sourceCol = 0; sourceCol < rooms[sourceRow].length; ++sourceCol) {
-                        if(rooms[sourceRow][sourceCol]===-1){
-                            continue
-                        }
+        let changeRow = [-1, 0, 0, 1]
+        let changeColumn = [0, 1, -1, 0]
+        const queue = []
+        rooms.map(function (element, row) {
+            element.map(function (el, column) {
+                let pos = [row, column, el]
+                if (el === 0) {
+                    queue.unshift(pos)
 
-                    }
                 }
+            })
+        })
+        debugger
+        while (queue.length !== 0) {
+
+            let currElem = queue[queue.length-1]
+            let row = currElem[0]
+            let column = currElem[1]
+            for (let i = 0; i < 4; i++) {
+                let currRow = row + changeRow[i]
+                let currColumn = column + changeColumn[i]
+                if (isSafe(rooms, currRow, currColumn) && rooms[currRow][currColumn] === 2147483647) {
+                    rooms[currRow][currColumn] = rooms[row][column] + 1
+                    queue.unshift([currRow, currColumn, rooms[currRow][currColumn]])
+                    console.log(rooms)
+                }
+
             }
+
+            queue.pop()
         }
+
+
     }
 
 
-};
+;
+wallsAndGates([
+        [2147483647, -1, 0, 2147483647],
+        [2147483647, 2147483647, 2147483647, -1],
+        [2147483647, -1, 2147483647, -1],
+        [0, -1, 2147483647, 2147483647]
+    ]
+)
