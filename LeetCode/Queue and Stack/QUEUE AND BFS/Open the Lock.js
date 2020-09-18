@@ -1,64 +1,48 @@
-function shortestValue(queue, target) {
-    let min = Infinity
-    let resultIndex=0;
-    queue.map(function (element, index) {
-        let sum  = 0
-        for(let i = 0; i<4; i++){
-            sum = sum + Number(target[i]) - Number(element[i])
-        }
-        if(sum<min){
-            min = sum
-            resultIndex=index
-        }
-    })
-    return resultIndex
-}
 const openLock = function (deadends, target) {
-    if(deadends.includes("0000")){
+    const visited = new Set()
+    deadends.map(el=>visited.add(el))
+    if (visited.has("0000")) {
         return -1
     }
-    debugger
     const queue = []
     queue.push('0000')
-    let step = 0
-    let index;
+    let level = 0
     while (queue.length !== 0) {
-        for (let pos = 0; pos < 4; pos++) {
-            for (let i = 0; i < 2; i++) {
-                let index = shortestValue(queue, target)
-                let currNumber = queue[index].slice()
-                let number
-                if (i === 0 && currNumber[pos] !== "9") {
-                    number = Number(currNumber[pos]) + 1
-                    number = String(number)
-                }
-                if (i === 1 && currNumber[pos] !== "0") {
-                    number = Number(currNumber[pos]) - 1
-                    number = String(number)
-                }
-                if (i === 0 && currNumber[pos] === "9") {
-                    number = "0"
-                }
-                if (i === 1 && currNumber[pos] === "0") {
-                    number = "9"
-                }
-
-
-                currNumber = currNumber.slice(0, pos) + number + currNumber.slice(pos + 1, currNumber.length)
-
-
-                if (!deadends.includes(currNumber)) {
-                    queue.push(currNumber)
-                }
-                if (currNumber === target) {
-                    return step + 1
-                }
-
+        let size = queue.length
+        for (let n = 0; n < size; n++) {
+            let nodeNumber = queue.shift()
+            if (visited.has(nodeNumber)) {
+                continue
             }
+            if (target === nodeNumber) {
+                return level
+            }
+            visited.add(nodeNumber)
+            let currNumber = nodeNumber
+            currNumber = currNumber.split('')
+            currNumber.map((el, index) => currNumber[index] = Number(el))
+            for (let pos = 0; pos < 4; ++pos) {
+                let currCopyPlus = currNumber.slice()
+                let currCopyMinus = currNumber.slice()
+                currCopyPlus[pos] = currCopyPlus[pos] + 1
+                currCopyMinus[pos] = currCopyMinus[pos] - 1
+                currCopyPlus[pos] = currCopyPlus[pos] > 9 ? 0 : currCopyPlus[pos]
+                currCopyMinus[pos] = currCopyMinus[pos] < 0 ? 9 : currCopyMinus[pos]
+
+                let stringNumPlus = "" + currCopyPlus[0] + currCopyPlus[1] + currCopyPlus[2] + currCopyPlus[3]
+                let stringNumMinus = "" + currCopyMinus[0] + currCopyMinus[1] + currCopyMinus[2] + currCopyMinus[3]
+                if (!visited.has(stringNumPlus)) {
+                    queue.push(stringNumPlus)
+                }
+                if (!visited.has(stringNumMinus)) {
+                    queue.push(stringNumMinus)
+                }
+            }
+
+
         }
-        queue.splice(index,1)
-        ++step
+        level = level + 1
     }
-    return step
+    return -1
 };
 console.log(openLock(["0201", "0101", "0102", "1212", "2002"], "0202"))
