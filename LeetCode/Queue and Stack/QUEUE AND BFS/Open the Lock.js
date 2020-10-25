@@ -38,8 +38,6 @@ const openLock = function (deadends, target) {
                     queue.push(stringNumMinus)
                 }
             }
-
-
         }
         level = level + 1
     }

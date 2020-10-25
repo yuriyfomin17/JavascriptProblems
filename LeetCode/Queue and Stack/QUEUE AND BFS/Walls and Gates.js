@@ -25,7 +25,7 @@ const wallsAndGates = function (rooms) {
             element.map(function (el, column) {
                 let pos = [row, column, el]
                 if (el === 0) {
-                    queue.unshift(pos)
+                    queue.push(pos)
 
                 }
             })
@@ -33,7 +33,7 @@ const wallsAndGates = function (rooms) {
         debugger
         while (queue.length !== 0) {
 
-            let currElem = queue[queue.length-1]
+            let currElem = queue[0]
             let row = currElem[0]
             let column = currElem[1]
             for (let i = 0; i < 4; i++) {
@@ -41,13 +41,13 @@ const wallsAndGates = function (rooms) {
                 let currColumn = column + changeColumn[i]
                 if (isSafe(rooms, currRow, currColumn) && rooms[currRow][currColumn] === 2147483647) {
                     rooms[currRow][currColumn] = rooms[row][column] + 1
-                    queue.unshift([currRow, currColumn, rooms[currRow][currColumn]])
+                    queue.push([currRow, currColumn, rooms[currRow][currColumn]])
                     console.log(rooms)
                 }
 
             }
 
-            queue.pop()
+            queue.shift()
         }
 
 

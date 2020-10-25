@@ -17,14 +17,13 @@ const numIslands = function (rooms) {
             element.map(function (el, column) {
                 let pos = [row, column, 0]
                 if (el === '1') {
-                    queue.unshift(pos)
+                    queue.push(pos)
                     rooms[row][column] = 0
-
                 }
                 let index = false
                 while (queue.length !== 0) {
                     index = true
-                    let currElem = queue[queue.length - 1]
+                    let currElem = queue[0]
                     let row = currElem[0]
                     let column = currElem[1]
                     for (let i = 0; i < 4; i++) {
@@ -32,13 +31,12 @@ const numIslands = function (rooms) {
                         let currColumn = column + changeColumn[i]
                         if (isSafe(rooms, currRow, currColumn) && rooms[currRow][currColumn] === "1") {
                             rooms[currRow][currColumn] = rooms[row][column] + 1
-                            queue.unshift([currRow, currColumn, rooms[currRow][currColumn]])
+                            queue.push([currRow, currColumn, rooms[currRow][currColumn]])
                         }
                     }
-                    queue.pop()
+                    queue.shift()
                 }
                 if (index) {
-
                     ++count
                 }
             })
@@ -50,10 +48,10 @@ const numIslands = function (rooms) {
 
 
 ;
-numIslands([
+console.log( numIslands([
         ["1", "1", "0", "0", "0"],
         ["1", "1", "0", "0", "0"],
         ["0", "0", "1", "0", "0"],
         ["0", "0", "0", "1", "1"]
     ]
-)
+))
