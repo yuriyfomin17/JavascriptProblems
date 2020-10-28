@@ -9,6 +9,7 @@ const findTargetSumWays = function (nums, S) {
         if (index === nums.length) {
             if (sum === target) {
                 count = count + 1
+                let key = '' + index + ',' + sum
                 return count
             }
         } else {
@@ -19,10 +20,8 @@ const findTargetSumWays = function (nums, S) {
     }
 
     calculateSum(0, 0, S)
-    console.log(count)
     return count
 }
-
 
 
 

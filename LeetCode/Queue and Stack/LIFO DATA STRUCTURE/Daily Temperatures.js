@@ -37,8 +37,7 @@ const dailyTemperatures = function (T) {
 // O(W). The size of the stack is bounded as it represents strictly increasing temperatures.
 
 
-
-    const dailyTemperatures2 = function (T) {
+const dailyTemperatures2 = function (T) {
     const stack = []
     const days = []
     for (let i = T.length - 1; i >= 0; i--) {
@@ -46,14 +45,14 @@ const dailyTemperatures = function (T) {
             stack.shift()
         }
         stack.unshift([i, T[i]])
-        if(stack.length>1){
+        if (stack.length > 1) {
 
             days.unshift(stack[1][0] - stack[0][0])
-        }else{
+        } else {
             days.unshift(0)
         }
     }
     return days
 };
 
-console.log(dailyTemperatures2([89,62,70,58,47,47,46,76,100,70]))
+console.log(dailyTemperatures2([89, 62, 70, 58, 47, 47, 46, 76, 100, 70]))
