@@ -9,13 +9,15 @@ function TreeNode(val, left, right) {
  * @param {number[]} postorder
  * @return {TreeNode}
  */
+// Time complexity is O(N)
+// Space complexity is O(N) since we store the entire tree
 const buildTree = function (inorder, postorder) {
     const dict = {}
     inorder.map((el, index) => {
         dict[el] = index
     })
     const helper = (left, right) => {
-        if (right > left) {
+        if (left <= right) {
             let value = postorder.pop()
             let root = new TreeNode(value)
 
@@ -25,9 +27,10 @@ const buildTree = function (inorder, postorder) {
             root.left = helper(left, index - 1)
 
             return root
-        }else {
+        } else {
             return null
         }
     }
-    return helper(0, inorder.length-1)
+    return helper(0, inorder.length - 1)
 };
+buildTree([9, 3, 15, 20, 7], [9, 15, 7, 20, 3])
