@@ -23,14 +23,13 @@ const buildTree = function (inorder, postorder) {
 
             let index = dict[value]
 
-            root.right = helper(index + 1, right)
-            root.left = helper(left, index - 1)
+            root.right = helper(index+1, right)
+            root.left = helper(left, index-1)
 
             return root
         } else {
             return null
         }
     }
-    return helper(0, inorder.length - 1)
-};
-buildTree([9, 3, 15, 20, 7], [9, 15, 7, 20, 3])
+    return helper(0, postorder.length-1)
+}
