@@ -23,13 +23,42 @@ const buildTree = function (inorder, postorder) {
 
             let index = dict[value]
 
-            root.right = helper(index+1, right)
-            root.left = helper(left, index-1)
+            root.right = helper(index + 1, right)
+            root.left = helper(left, index - 1)
 
             return root
         } else {
             return null
         }
     }
-    return helper(0, postorder.length-1)
+    return helper(0, postorder.length - 1)
+}
+const buildTreeIteration = function (inorder, postorder) {
+    const dict = new Map()
+    inorder.map((el, index) => {
+        dict.set(el, index)
+    })
+    let root = null
+    const stack = []
+    for (let i = postorder.length - 1; i >= 0; i--) {
+        if (root === null) {
+            root = new TreeNode(postorder[i])
+            stack.push(root)
+        } else {
+            let node = new TreeNode(postorder[i])
+            if (dict.get(postorder[i]) > dict.get(stack[stack.length - 1].val)) {
+                stack[stack.length - 1].right = node
+
+            } else {
+                let u
+                while (stack.length !== 0 && dict.get(postorder[i]) < dict.get(stack[stack.length - 1].val)) {
+                    u = stack.pop()
+                }
+                u.left = node
+            }
+            stack.push(node)
+        }
+
+    }
+    return root
 }
