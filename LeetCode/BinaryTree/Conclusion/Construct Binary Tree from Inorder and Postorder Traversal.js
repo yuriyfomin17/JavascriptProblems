@@ -48,7 +48,6 @@ const buildTreeIteration = function (inorder, postorder) {
             let node = new TreeNode(postorder[i])
             if (dict.get(postorder[i]) > dict.get(stack[stack.length - 1].val)) {
                 stack[stack.length - 1].right = node
-
             } else {
                 let u
                 while (stack.length !== 0 && dict.get(postorder[i]) < dict.get(stack[stack.length - 1].val)) {
