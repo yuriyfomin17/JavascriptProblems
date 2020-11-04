@@ -3,13 +3,12 @@
  * @param {number} target
  * @return {number[]}
  */
-// Time complexity I believe is O(n^2) since we scan through whole array
-// and then we scan the rest of the array in each iteration of N
-// Space complexity is O(1) since we are not utilizing any extra space
+// Time Complexity is O(n* k) since we iterate over wholce array num n times and each time we search for first index of remainder again
+// n * k  where     n is the whole length of the array where k = n - 1 + n - 2 + n - 3
+// Space Complexity is O(1) where it  is the length of answer array which is 2
 const twoSum = function (nums, target) {
-    let remainder = 0
     for (let i = 0; i < nums.length; i++) {
-        remainder = target - nums[i]
+        let remainder = target - nums[i]
         let indexOfRemainder = nums.indexOf(remainder, i + 1)
         if (indexOfRemainder !== -1) {
             return [i, indexOfRemainder]
@@ -18,27 +17,21 @@ const twoSum = function (nums, target) {
     return []
 };
 
-// We can reduce time complexity by trading space for speed via utilization of hash
-// table since look up in hash table is O(1).
-// And we iterate through array once so time complexity is O(N)
-// Space complexity is O(N) where N is the size of the  hash table
-
+// Time complexity is at most O(N) since we iterate through an array N time
+// We trade space complexity for speed hence Space complexity  is O(K) where K is the length of
+// the dictionary  which at most can be equal to the length of the string
 const twoSumHash = function (nums, target) {
-    let remainder = 0
     const dict = new Map()
     for (let i = 0; i < nums.length; i++) {
-        remainder = target - nums[i]
+        let remainder = target - nums[i]
         if (dict.has(remainder)) {
             return [i, dict.get(remainder)]
         } else {
             dict.set(nums[i], i)
         }
-
     }
     return []
 };
-console.log(twoSumHash([3, 2, 4], 6))
-
 
 
 
