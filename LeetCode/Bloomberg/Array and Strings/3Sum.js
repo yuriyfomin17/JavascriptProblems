@@ -32,9 +32,7 @@ const threeSum = function (nums) {
             } else {
                 result.push([nums[i], nums[left], nums[right]])
                 left += 1
-                while (nums[left] === nums[left - 1] && left < right) {
-                    left += 1
-                }
+
             }
 
         }
