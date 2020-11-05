@@ -2,6 +2,10 @@
  * @param {number[][]} board
  * @return {number[][]}
  */
+
+// Time Complexity is O((R*C)^2) where R and C are number of rows and columns in board. If we crush
+// only 3 candies at time then functions is called R*C/3 and and we scan board 3*R*C henceO((R*C)^2)
+// SPace complexity is O(1) since we edit board directly
 const candyCrush = function (board) {
     let rowWidth = board.length
     let colWidth = board[0].length
