@@ -64,11 +64,11 @@ const buildTree = function (preorder, inorder) {
             stack.push(root)
         } else {
             let node = new TreeNode(preorder[i])
-            if (dict.get(preorder[i]) < dict.get(stack[stack.length-1].val)) {
+            if (dict.get(preorder[i]) < dict.get(stack[stack.length - 1].val)) {
                 stack[stack.length - 1].left = node
             } else {
-                let u = stack[stack.length-1]
-                while (stack.length!==0 &&dict.get(preorder[i]) > dict.get(u.val)) {
+                let u = stack[stack.length - 1]
+                while (stack.length !== 0 && dict.get(preorder[i]) > dict.get(u.val)) {
                     u = stack.pop()
                 }
                 u.right = node
