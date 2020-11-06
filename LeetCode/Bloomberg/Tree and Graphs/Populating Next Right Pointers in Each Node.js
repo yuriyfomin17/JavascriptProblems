@@ -11,7 +11,7 @@ function TreeNode(val, left, right, next) {
 // Space complexity is O(2*N) = > O(N) since we utilize array queue to store results and array result
 // to store nodes
 const connect = function (root) {
-    if(!root){
+    if (!root) {
         return null
     }
     const queue = [root]
@@ -41,5 +41,40 @@ const connect = function (root) {
 
         }
     }
+    return root
+};
+// Time complexity is O(N) in theory since we traverse each node only once
+// Space complexity is O(1) since we are changing tree in place without using extra space
+const connect2 = function (root) {
+    if (!root) {
+        return null
+    }
+    const queue = [root]
+    while (queue.length !== 0) {
+        let currNode = queue.shift()
+        if (currNode.left !== null) {
+            queue.push(currNode.left)
+        }
+        if (currNode.right !== null) {
+            queue.push(currNode.right)
+        }
+
+        let prevNode = currNode.left
+        let nextNode = currNode.right
+        while (nextNode !== null) {
+            prevNode.next = nextNode
+            nextNode = nextNode.next
+            if(currNode!==root&& currNode.next!==null){
+                currNode.right.next = currNode.next.left
+                currNode = currNode.next
+                prevNode = currNode.left
+                nextNode = currNode.right
+            }
+
+        }
+
+
+    }
+
     return root
 };
