@@ -11,48 +11,97 @@
  * @param {number} n
  * @return {ListNode}
  */
+// Time complexity is O(N)(traversing linked list) + O(N) (reversing array)
+// Space complexity is O(N) where N is the size of an array
 const reverseBetween = function (head, m, n) {
-    if(m===n ){
+    if (m === n) {
         return head
     }
-    let current = head
     let count = 1
-    let link1 = null
-    let link2 = null
-    let result = []
-    let index1 = false
-    while (current !== null) {
-        if (count === n+1) {
-            link2 = current
-            index1 = false
+    let current = head
+    const smallLinks = []
+    let indexTail = true
+    let indexHead = true
+    let headLink = null
+    let tailLink = null
+    while (current) {
+        if (indexHead && count < m) {
+            headLink = current
         }
-        if (index1) {
-            result.push(current)
+        if (count >= m && count <= n) {
+            smallLinks.push(current)
+            indexHead = false
         }
-        if (count === m-1) {
-            link1 = current
-            index1 = true
+        if (count > n && indexTail) {
+            tailLink = current
+            indexTail = false
         }
-
-        current = current.next
         count += 1
+        current = current.next
     }
-    result = result.reverse()
-    for(let i =1; i<result.length; i++){
-        result[i-1].next = null
-        result[i].next = null
-        result[i-1].next = result[i]
+    smallLinks.reverse()
+    for (let i = 1; i < smallLinks.length; i++) {
+        smallLinks[i - 1].next = null
+        smallLinks[i].next = null
+        smallLinks[i - 1].next = smallLinks[i]
     }
-    if(result.length!==0){
-        link1.next = result[0]
-        result[result.length-1].next = link2
-        link2.next = null
-    }else{
-        let last = head.next
-        head.next = null
-        last.next = head
-        head = last
-    }
+    if (headLink && tailLink) {
+        headLink.next = smallLinks[0]
+        smallLinks[smallLinks.length - 1].next = tailLink
 
+    }
+    if (headLink && !tailLink) {
+        headLink.next = smallLinks[0]
+    }
+    if (!headLink && tailLink) {
+        smallLinks[smallLinks.length - 1].next = tailLink
+        head = smallLinks[0]
+    }
+    if (!headLink && !tailLink) {
+        head = smallLinks[0]
+    }
+    return head
+
+};
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} m
+ * @param {number} n
+ * @return {ListNode}
+ */
+// Space complexity is O(N)
+// Time complexity is O(1)
+const reverseBetween = function (head, m, n) {
+    let previous = null
+    let current = head
+    while (m > 1) {
+        previous = current
+        current = current.next
+        m = m - 1
+        n = n - 1
+    }
+    let tail = current
+    let con = previous
+    let third = current.next
+    while (n) {
+        third = current.next
+        current.next = previous
+        previous = current
+        current = third
+        n -= 1
+    }
+    if(con){
+        con.next = previous
+    }else{
+        head = previous
+    }
+    tail.next = current
     return head
 };
