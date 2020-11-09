@@ -2,7 +2,7 @@
  * @param {string} s
  * @return {boolean}
  */
-// Time COmplexity is O(N) where N is the number of chars in array
+// Time Complexity is O(N) where N is the number of chars in array
 // Space Complexity is O(N) where N is the number of elements stored in stack
 const isValid = function (s) {
     const arr = s.split('')
