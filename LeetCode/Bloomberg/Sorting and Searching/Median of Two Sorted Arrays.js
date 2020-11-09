@@ -4,7 +4,6 @@
  * @return {number}
  */
 const findMedianSortedArrays = function (nums1, nums2) {
-    debugger
     nums1.push(...nums2)
     nums1.sort(function (a, b) {
         if (a > b) {
