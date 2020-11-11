@@ -30,22 +30,21 @@ const isAnagram = function (s, t) {
 const isAnagramHash = function (s, t) {
     debugger
     if (s.length === t.length) {
-        const dict = new Map()
+        const dict = {}
         for (let i = 0; i < s.length; i++) {
-            if (!dict.has(s.charAt(i))) {
-                dict.set(s.charAt(i), 1)
-            }else if(dict.has(s.charAt(i))){
-                dict.set(s.charAt(i), dict.get(s.charAt(i)) + 1)
+            if (!dict[s.charAt(i)]) {
+                dict[s.charAt(i)] = 1
+            } else if (dict[s.charAt(i)]) {
+                dict[s.charAt(i)] = dict[s.charAt(i)] + 1
             }
 
-            if (!dict.has(t.charAt(i))) {
-                dict.set(t.charAt(i), -1)
-            }else if(dict.has(t.charAt(i))){
-                dict.set(t.charAt(i), dict.get(t.charAt(i)) - 1)
+            if (!dict[t.charAt(i)]) {
+                dict[t.charAt(i)] = -1
+            } else if (dict[t.charAt(i)]) {
+                dict[t.charAt(i)] = dict[t.charAt(i)] - 1
             }
         }
-        let entries = dict.entries()
-        for (let [key, value] of entries) {
+        for (let [key, value] of Object.entries(dict)) {
             if (value !== 0) {
                 return false
             }
@@ -55,4 +54,6 @@ const isAnagramHash = function (s, t) {
         return false
     }
 };
-isAnagramHash("anagram", "nagaram")
+console.log(
+    isAnagramHash("anagram", "nagaram")
+)
