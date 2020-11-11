@@ -18,6 +18,7 @@ const maxProfit = function (prices) {
 
 maxProfit([2, 4, 1])
 
+
 const maxProfit2 = function (prices) {
     let minPrice = Infinity
     let maxProfit = 0
@@ -25,6 +26,7 @@ const maxProfit2 = function (prices) {
         if(prices[i]<minPrice){
             minPrice = prices[i]
         }else if(maxProfit< prices[i]-minPrice){
+
             maxProfit = prices[i]-minPrice
         }
 
