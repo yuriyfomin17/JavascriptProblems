@@ -18,15 +18,15 @@ const firstUniqChar = function (s) {
 const firstUniqCharH = function (s) {
     debugger
     const size = s.length
-    const dict = new Map()
+    const dict = {}
     for (let i = 0; i < size; i++) {
-        if (!dict.has(s.charAt(i))) {
-            dict.set(s.charAt(i), [i, 1])
+        if (!dict[s.charAt(i)]) {
+            dict[s.charAt(i)] = [i,1]
         } else {
-            dict.set(s.charAt(i), [i, dict.get(s.charAt(i))[1] + 1])
+            dict[s.charAt(i)][1] = dict[s.charAt(i)][1] + 1
         }
     }
-    for (let [key, value] of dict.entries()) {
+    for (let [key, value] of Object.entries(dict)) {
         if (value[1] === 1) {
             return value[0]
         }
