@@ -1,7 +1,8 @@
-const UndergroundSystem = function () {
-    this.start = {}
-    this.end = {}
-
+// Time Complexity is O(1)
+// Space complexity is O(N+ M) where N and M is the size of average and train
+var UndergroundSystem = function() {
+    this.avg = new Map();
+    this.train = new Map();
 };
 
 /**
@@ -10,13 +11,8 @@ const UndergroundSystem = function () {
  * @param {number} t
  * @return {void}
  */
-UndergroundSystem.prototype.checkIn = function (id, stationName, t) {
-    if (this.start[stationName]) {
-        this.start[stationName].push(t)
-    } else {
-        this.start[stationName] = [t]
-    }
-
+UndergroundSystem.prototype.checkIn = function(id, start, t) {
+    this.train.set(id, [start, t]);
 };
 
 /**
@@ -25,13 +21,16 @@ UndergroundSystem.prototype.checkIn = function (id, stationName, t) {
  * @param {number} t
  * @return {void}
  */
-UndergroundSystem.prototype.checkOut = function (id, stationName, t) {
-    if (this.end[stationName]) {
-        this.end[stationName].push(t)
+UndergroundSystem.prototype.checkOut = function(id, end, t) {
+    const [start, s] = this.train.get(id);
+    const key = [start, end].join();
+    if (this.avg.has(key)) {
+        let [avg, cnt] = this.avg.get(key);
+        this.avg.set(key, [avg * (cnt/++cnt) + ((t - s)/cnt), cnt]);
     } else {
-        this.end[stationName] = [t]
+        this.avg.set(key, [(t - s), 1]);
     }
-
+    this.train.delete(id);
 };
 
 /**
@@ -39,44 +38,17 @@ UndergroundSystem.prototype.checkOut = function (id, stationName, t) {
  * @param {string} endStation
  * @return {number}
  */
-UndergroundSystem.prototype.getAverageTime = function (startStation, endStation) {
-    let arrStart = this.start[startStation]
-    let arrEnd = this.end[endStation]
-    let size = arrStart.length
-    if (arrEnd.length > arrStart.length) {
-        size = arrStart.length
-    }else if(arrEnd.length < arrStart.length){
-        size = arrEnd.length
-    }
-    let sumStart = 0
-    let sumEnd = 0
-    for (let i = 0; i < size; i++) {
-        sumStart = sumStart + arrStart[i]
-        sumEnd = sumEnd + arrEnd[i]
-    }
-    return (sumEnd - sumStart) / size
-
+UndergroundSystem.prototype.getAverageTime = function(start, end) {
+    return this.avg.get([start, end].join())[0];
 };
-
-/**
- * Your UndergroundSystem object will be instantiated and called as such:
- * var obj = new UndergroundSystem()
- * obj.checkIn(id,stationName,t)
- * obj.checkOut(id,stationName,t)
- * var param_3 = obj.getAverageTime(startStation,endStation)
- */
 debugger
 const undergroundSystem = new UndergroundSystem();
-undergroundSystem.checkIn(45, "Leyton", 3);
-undergroundSystem.checkIn(32, "Paradise", 8);
-undergroundSystem.checkIn(27, "Leyton", 10);
-undergroundSystem.checkOut(45, "Waterloo", 15);
-undergroundSystem.checkOut(27, "Waterloo", 20);
-undergroundSystem.checkOut(32, "Cambridge", 22);
-console.log(
-    undergroundSystem.getAverageTime("Paradise", "Cambridge")
-
-)
-console.log(
-    undergroundSystem.getAverageTime("Leyton", "Waterloo")
-)
+undergroundSystem.checkIn(10, "Leyton", 3);
+undergroundSystem.checkOut(10, "Paradise", 8);
+undergroundSystem.getAverageTime("Leyton", "Paradise"); // return 5.00000
+undergroundSystem.checkIn(5, "Leyton", 10);
+undergroundSystem.checkOut(5, "Paradise", 16);
+undergroundSystem.getAverageTime("Leyton", "Paradise"); // return 5.50000
+undergroundSystem.checkIn(2, "Leyton", 21);
+undergroundSystem.checkOut(2, "Paradise", 30);
+undergroundSystem.getAverageTime("Leyton", "Paradise"); // return 6.66667
