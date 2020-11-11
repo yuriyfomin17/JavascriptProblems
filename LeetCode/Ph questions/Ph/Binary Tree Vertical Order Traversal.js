@@ -36,7 +36,6 @@ const verticalOrder = function (root) {
 
     }
     let result = []
-    console.log(dict)
     for (let [key, value] of Object.entries(dict)) {
         result.push([key, value])
     }
