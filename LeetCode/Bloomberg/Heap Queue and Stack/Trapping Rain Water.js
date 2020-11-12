@@ -70,22 +70,3 @@ const trap3 = function (height) {
     }
     return ans
 };
-
-/**
- * @param {number[]} height
- * @return {number}
- */
-const trap4 = function (height) {
-    let waterTrap = 0
-    debugger
-    for (let i = 0; i < height.length-1; i++) {
-        let leftArr = height.slice(0, i+1)
-        let rightArr = height.slice(i+1, height.length)
-        let leftMax = Math.max(...leftArr)
-        let rightMax = Math.max(...rightArr)
-        waterTrap = waterTrap +Math.min(leftMax, rightMax) - height[i]
-    }
-    return waterTrap
-};
-
-trap4([0,1,0,2,1,0,1,3,2,1,2,1])
