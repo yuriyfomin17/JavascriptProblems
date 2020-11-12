@@ -6,36 +6,36 @@
 // Time complexity is O(n^3) since we iterating over string n *n*n times where n is th length of the string
 // Space complexity is O(K) where K is the length of the dictionary. At most k can be equal to the length of the string
 const lengthOfLongestSubstringBrute = function (s) {
-    if (s === '') {
-        return 0
-    }
-    if (s === ' ') {
-        return 1
-    }
-    let answer = -Infinity
-    let dict = new Map()
+    let maxSub = ''
+    debugger
+    let dict = {}
     for (let start = 0; start < s.length; start++) {
         for (let finish = start + 1; finish <= s.length; finish++) {
-            let index = true
-            for (let i = start; i < finish && index === true; i++) {
-                if (!dict.has(s.charAt(i)) && index) {
-                    answer = Math.max(answer, i - start + 1)
-                    dict.set(s.charAt(i), i)
-                } else {
-                    index = false
+            let currString = ''
+            for (let i = start; i <= finish; i++) {
+                if(!dict[s.charAt(i)]){
+                    dict[s.charAt(i)] = 1
+                    currString = currString + s.charAt(i)
+                    if(currString.length>maxSub.length){
+                        maxSub = currString
+                    }
+
+                }else{
+                    break
                 }
             }
-            dict.clear()
+            dict = {}
+
         }
     }
-    return answer
+    return  maxSub.length
 };
 
 // Time complexity is O(N) since we iterate through the entire string at most once. And deletion and insertion process in dictionary is O(1)
 // Space complexity is O(K) which is the size of the dictionary where K in worst cases will be the length of the string
 
 const lengthOfLongestSubstring = function (s) {
-    if(s===''){
+    if (s === '') {
         return 0
     }
     let start = 0
@@ -56,3 +56,34 @@ const lengthOfLongestSubstring = function (s) {
 };
 
 console.log(lengthOfLongestSubstring("pwwkew"))
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring2 = function (s) {
+    let maxSub = ''
+    debugger
+    let dict = {}
+    for (let start = 0; start < s.length; start++) {
+        for (let finish = start + 1; finish <= s.length; finish++) {
+            let currString = ''
+            for (let i = start; i <= finish; i++) {
+                if(!dict[s.charAt(i)]){
+                    dict[s.charAt(i)] = 1
+                    currString = currString + s.charAt(i)
+                    if(currString.length>maxSub.length){
+                        maxSub = currString
+                    }
+
+                }else{
+                    break
+                }
+            }
+            dict = {}
+
+        }
+    }
+    return  maxSub.length
+};
+
+lengthOfLongestSubstring2("pwwkew")
