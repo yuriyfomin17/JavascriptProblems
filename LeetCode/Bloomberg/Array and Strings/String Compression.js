@@ -7,6 +7,7 @@
 // Then we insert the number which is O(1)
 // Space complexity is O(1) since we utilize only initial chars array to store the results
 const compress = function (chars) {
+    debugger
     if (chars.length === 0) {
         return 0
     }
