@@ -3,6 +3,14 @@
  * @param {string} word
  * @return {boolean}
  */
+// My best guess would be that time complexity is O(M*(3^L))
+// where M is the number of cells on the board and L is the maximum Length of the board
+    // 1. Algorithm loops over each cell on board so M is the factor in fomula.
+    // It then depends on the maximum number of steps we need to find word. We can have at most 4 directions to explore
+    // however we know that 1 is in visited dictionary and we can't go there so it becomes that we hae onle 3 directions to explore
+    //
+    // Space Complexity is O(L) where L is the length of the word to be matched. Main consumption lies in recursion calls
+
 const exist = function (board, word) {
     if (board.length === 0) {
         return false
