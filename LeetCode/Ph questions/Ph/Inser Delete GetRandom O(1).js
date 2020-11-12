@@ -57,3 +57,61 @@ randomizedSet.insert(0); // 2 was already in the set, so return false.
 console.log(
     randomizedSet.getRandom()
 )
+
+
+// Secodn Solution
+
+/**
+ * Initialize your data structure here.
+ */
+var RandomizedSet = function() {
+    this.map = {};
+    this.nums = [];
+};
+
+/**
+ * Inserts a value to the set. Returns true if the set did not already contain the specified element.
+ * @param {number} val
+ * @return {boolean}
+ */
+RandomizedSet.prototype.insert = function(val) {
+    if (this.map[val]) return false;
+    this.nums.push(val);
+    this.map[val] = this.nums.length;
+    return true;
+};
+
+/**
+ * Removes a value from the set. Returns true if the set contained the specified element.
+ * @param {number} val
+ * @return {boolean}
+ */
+RandomizedSet.prototype.remove = function(val) {
+    if (this.map[val]) {
+        var idx = this.map[val] - 1;
+        this.map[this.nums[this.nums.length - 1]] = idx + 1;
+        delete this.map[val];
+        var tmp = this.nums[idx];
+        this.nums[idx] = this.nums[this.nums.length - 1];
+        this.nums[this.nums.length - 1] = tmp;
+        this.nums.pop();
+        return true;
+    }
+    return false;
+};
+
+/**
+ * Get a random element from the set.
+ * @return {number}
+ */
+RandomizedSet.prototype.getRandom = function() {
+    return this.nums[Math.floor(Math.random() * this.nums.length)];
+};
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * var obj = new RandomizedSet()
+ * var param_1 = obj.insert(val)
+ * var param_2 = obj.remove(val)
+ * var param_3 = obj.getRandom()
+ */
