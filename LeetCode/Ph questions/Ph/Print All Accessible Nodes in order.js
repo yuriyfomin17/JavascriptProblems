@@ -7,7 +7,6 @@ function Node(val, up, down, right) {
 }
 
 function PrintAllNodes() {
-    debugger
     const result = []
     const helper = (node) => {
         if(!node){
@@ -19,7 +18,6 @@ function PrintAllNodes() {
         helper(node.right)
 
     }
-    debugger
     const roo = new Node(3)
     roo.up = new Node(2)
     roo.up.up = new Node(1)
