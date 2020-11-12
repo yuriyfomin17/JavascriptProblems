@@ -4,7 +4,7 @@
  */
 // Time Complexity is O(N^2) where we iterate over array N* N times
 // Space complexity is O(1)
-const trap = function (height) {
+const trap1 = function (height) {
     let leftMax = 0
     let ans = 0
     let rightMax = 0
@@ -22,11 +22,11 @@ const trap = function (height) {
     return ans
 };
 
-trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])
+
 
 // Space Complexity is O(N) since we iterate three times over height
 // Space complexity is O(N) we store the 2 times the height array in dictionary
-const trap = function (height) {
+const trap2 = function (height) {
     const leftMax = {}
     leftMax[0] = height[0]
     for (let i = 1; i < height.length; i++) {
@@ -51,7 +51,7 @@ const trap = function (height) {
  */
 // Time complexity is O(N) where N is the length of an array
 // O(1) is the space complexity
-const trap = function (height) {
+const trap3 = function (height) {
     let left = 0
     let right = height.length - 1
     let leftMax = 0
@@ -70,3 +70,22 @@ const trap = function (height) {
     }
     return ans
 };
+
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+const trap4 = function (height) {
+    let waterTrap = 0
+    debugger
+    for (let i = 0; i < height.length-1; i++) {
+        let leftArr = height.slice(0, i+1)
+        let rightArr = height.slice(i+1, height.length)
+        let leftMax = Math.max(...leftArr)
+        let rightMax = Math.max(...rightArr)
+        waterTrap = waterTrap +Math.min(leftMax, rightMax) - height[i]
+    }
+    return waterTrap
+};
+
+trap4([0,1,0,2,1,0,1,3,2,1,2,1])
