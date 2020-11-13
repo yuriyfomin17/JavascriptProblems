@@ -88,17 +88,17 @@ const reverseBetween = function (head, m, n) {
         n = n - 1
     }
     let tail = current
-    let con = previous
-    let third = current.next
+    let start = previous
+    let next = current.next
     while (n) {
-        third = current.next
+        next = current.next
         current.next = previous
         previous = current
-        current = third
+        current = next
         n -= 1
     }
-    if(con){
-        con.next = previous
+    if(start){
+        start.next = previous
     }else{
         head = previous
     }
