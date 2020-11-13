@@ -33,11 +33,12 @@ var removeDuplicates = function (s, k) {
 };
 // Time Complexity is O(N)
 // Space complexity is O(N)
-var removeDuplicates = function (s, k) {
+var removeDuplicates2 = function (s, k) {
+    debugger
     let stack = [];
     s = s.split('');
     for (let i = 0; i < s.length; ++i) {
-        if (i == 0 || s[i] !== s[i - 1]) {
+        if (i === 0 || s[i] !== s[i - 1]) {
             stack.push(1);
         } else {
             stack[stack.length - 1]++;
@@ -51,3 +52,5 @@ var removeDuplicates = function (s, k) {
     }
     return s.join('');
 };
+
+removeDuplicates2("deeedbbcccbdaa",3)

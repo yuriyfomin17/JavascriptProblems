@@ -21,5 +21,6 @@ const removeDuplicates = function (S) {
         return acc+val
     },'')
 };
-
-removeDuplicates("aaaaaaaa")
+console.log(
+    removeDuplicates("aaaaaaaa")
+)

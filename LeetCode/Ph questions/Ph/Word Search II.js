@@ -45,7 +45,6 @@ const findWords = function (board, words) {
 
 
     }
-    debugger
     const resultDict = {}
     for (let row = 0; row < rowWidth; row++) {
         for (let col = 0; col < colWidth; col++) {
