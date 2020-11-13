@@ -3,7 +3,7 @@
  * @return {number}
  */
 const reverse = function (x) {
-    debugger
+
     let index = x >= 0
     const string = '' + x
     let arr = string.split('')
@@ -22,6 +22,20 @@ const reverse = function (x) {
     return num
 
 };
-console.log(
-    reverse(1534236469)
-)
+
+
+var reverse2 = function(num) {
+    debugger
+    let arr = [];
+    const sign = num > 0 ? 1 : -1 ;
+    num = Math.abs(num);
+    while(num) {
+        let digit = num%10;
+        arr.push(digit);
+        num = Math.floor(num/10);
+    }
+    let res = Number(arr.join(''));
+    return res > Math.pow(2, 31) ? 0 : res*sign;
+};
+
+reverse2(536)

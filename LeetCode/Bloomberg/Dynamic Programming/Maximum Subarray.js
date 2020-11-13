@@ -14,11 +14,9 @@ const maxSubArray = function (nums) {
         for (let end = nums.length; end > start; end--) {
             let newArr = nums.slice(start, end)
             let sum = newArr.reduce((acc, val) => {
-
                 return acc + val
             })
             maxSum = Math.max(maxSum, sum)
-            break
         }
     }
     return maxSum
