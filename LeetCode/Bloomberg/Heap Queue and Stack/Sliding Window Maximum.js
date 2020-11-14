@@ -1,6 +1,7 @@
 // Time Complexity is O(N*K) where N is the number of elements in array
 // Space Complexity is O(N-k+1) for the output array
 const maxSlidingWindow = function (nums, k) {
+    debugger
     const result = []
     const currArr = []
     let currMax = -Infinity
@@ -41,7 +42,6 @@ const maxSlidingWindow = function (nums, k) {
  */
 var maxSlidingWindow1 = function (nums, k) {
     // Decreasing monotonic queue so the maximum value is at the front
-    debugger
     const dequeue = [];
     const output = [];
     /*
@@ -81,14 +81,14 @@ var maxSlidingWindow1 = function (nums, k) {
 
     return output;
 };
-console.log(maxSlidingWindow1([1, 3, -1, -3, 5, 3, 6, 7], 3))
+console.log(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
 
 /**
  * @param {number[]} nums
  * @param {number} k
  * @return {number[]}
  */
-const maxSlidingWindow = function (nums, k) {
+const maxSlidingWindow2 = function (nums, k) {
     const queue = []
     const result = []
     for (let i = 0; i < nums.length; i++) {
