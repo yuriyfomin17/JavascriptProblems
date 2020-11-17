@@ -49,18 +49,28 @@ const findMin = function (nums) {
  * @param {number[]} nums
  * @return {number}
  */
-const findMin = function (nums) {
+// Time Complexity on average is O(Log(N)) where N is the length of the array
+// In worst case array can contain all identical elements whis would worsen time complexity to
+// O(N)
+// Space complexity is O(1)
+const findMin2 = function (nums) {
+    debugger
     let left = 0
     let right = nums.length - 1
     while (left < right) {
+        // left + Math.floor((right-left)/2). Assuming no overflow
+        //Specifically, it fails if the sum of low and high is greater
+        // than the maximum positive int value (2^31 - 1).
         let mid = Math.floor((left + right) / 2)
         if (nums[mid] < nums[right]) {
             right = mid
         } else if (nums[mid] > nums[right]) {
             left = mid + 1
-        }else {
-            right-=1
+        } else {
+            right -= 1
         }
     }
     return nums[left]
 };
+
+findMin2([2, 2, 2, 0, 1])
