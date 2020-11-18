@@ -7,9 +7,9 @@
 const findDuplicate = function (nums) {
     debugger
     nums.sort(function (a, b) {
-        if(a>b){
+        if (a > b) {
             return 1
-        }else {
+        } else {
             return -1
         }
     })
@@ -39,3 +39,22 @@ const findDuplicate = function (nums) {
     }
 };
 findDuplicate([1, 3, 4, 2, 2])
+// Time Complexity is O(2N)=>O(N) where N is the number of elements in array
+// Space Complexity is O(1) since we don't utilize any etra space
+const findDuplicateH = function (nums) {
+    let tortoise = nums[0]
+    let hare = nums[0]
+    while (true) {
+        tortoise = nums[tortoise]
+        hare = nums[nums[hare]]
+        if(tortoise===hare){
+            break
+        }
+    }
+    tortoise = nums[0]
+    while (tortoise!==hare){
+        tortoise = nums[tortoise]
+        hare = nums[hare]
+    }
+    return hare
+};
