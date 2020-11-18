@@ -14,6 +14,7 @@ const findMedianSortedArrays = function (nums1, nums2) {
     let low = 0
     let high = x
     while (low <= high) {
+        // median is the point which divide set in two sets of equal length
         let partitionX = Math.floor((low + high) / 2)
         let partitionY = Math.floor((x + y + 1) / 2) - partitionX
 
