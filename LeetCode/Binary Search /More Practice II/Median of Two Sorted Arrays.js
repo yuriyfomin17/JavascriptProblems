@@ -1,8 +1,13 @@
+
+
 /**
  * @param {number[]} nums1
  * @param {number[]} nums2
  * @return {number}
  */
+// Time Complexity is O(log(min(num1,num2))) since we are searching through array of smaller size
+// which is nums1
+// Space Complexity is O(1) since we don't utilize any extra memory
 const findMedianSortedArrays = function (nums1, nums2) {
     // if input1 length is greater than swap the inputs
     // since we always partition small array
