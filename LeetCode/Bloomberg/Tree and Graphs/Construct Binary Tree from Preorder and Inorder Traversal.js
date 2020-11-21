@@ -11,6 +11,8 @@
  * @param {number[]} inorder
  * @return {TreeNode}
  */
+// Time Complexity is O(N) where N is the number of nodes
+// Space Complexity is O(N) since we store the entire tree
 const buildTree = function (preorder, inorder) {
     const dict = new Map()
     inorder.map((el, index) => {
