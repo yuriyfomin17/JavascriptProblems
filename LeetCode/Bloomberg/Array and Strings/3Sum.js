@@ -23,6 +23,7 @@ const threeSum = function (nums) {
         }
         let left = i + 1
         let right = nums.length - 1
+        let previous = ''
         while (left < right) {
             let threeSum = nums[i] + nums[left] + nums[right]
             if (threeSum < 0) {
@@ -30,7 +31,11 @@ const threeSum = function (nums) {
             } else if (threeSum > 0) {
                 right -= 1
             } else {
-                result.push([nums[i], nums[left], nums[right]])
+                let current = '' + nums[i] + nums[left] + nums[right]
+                if(previous!==current){
+                    previous = current
+                    result.push([nums[i], nums[left], nums[right]])
+                }
                 left += 1
 
             }

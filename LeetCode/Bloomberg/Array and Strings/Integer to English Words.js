@@ -6,7 +6,7 @@
 
 //Time complexity is O(N) where n is the length o string since we iterate only once through it
 // Space complexity is O(1) since result is only a string
-const numberToWords = function (num) {
+const numberToWords1 = function (num) {
     if (num === 0) {
         return "Zero"
     }
@@ -109,15 +109,15 @@ const numberToWords = function (num) {
     }
     return result.trim()
 };
-console.log(numberToWords(1000000000))
 
-let numberToWords = num => {
+
+let numberToWords2 = num => {
     if (num === 0) return 'Zero';
     // prettier-ignore
     let unit = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
     let tens = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
     let exp = ['', ' Thousand', ' Million', ' Billion'];
-
+    debugger
     let threeToWord = sub => {
         let word = '';
         if (sub > 99) {
@@ -144,3 +144,4 @@ let numberToWords = num => {
 
     return translate.join(' ').trim();
 };
+numberToWords2(123456789)

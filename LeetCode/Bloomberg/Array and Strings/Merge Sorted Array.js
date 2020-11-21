@@ -15,26 +15,28 @@ var merge = function(nums1, m, nums2, n) {
 merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3
 )
 
-
-
-var merge = function(nums1, m, nums2, n) {
-    if (n == 0) return; // no need to do change anything
-
-    let idx1 = m-1, idx2 = n-1, end = m+n-1;
-    while (idx2 >= 0) {
-        if (nums1[idx1] > nums2[idx2]) {
+// Time Complexity: O(m+n)
+// Space Complexity: O(1)
+const merge = function (nums1, m, nums2, n) {
+    if (nums2.length > nums1.length) {
+        merge(nums2, n, nums1, m)
+    }
+    let index2 = n - 1
+    let index1 = m - 1
+    let end = m + n - 1
+    while (index2 >= 0) {
+        if (nums1[index1] > nums2[index2]) {
             // nums1[idx1] is greater than nums2[idx2]
-            nums1[end] = nums1[idx1];
-            idx1--;
+            nums1[end] = nums1[index1]
+            index1 -= 1
         } else {
             // 1st case: nums1[idx1] is undefined
             // 2nd case: nums2[idx2] is greater than nums1[idx1]
             // 3rd case: nums2[idx2] is equal to nums1[idx1]
-            nums1[end] = nums2[idx2];
-            idx2--;
+            nums1[end] = nums2[index2]
+            index2-=1
         }
-        end--;
+        end -= 1
     }
-    // Time Complexity: O(m+n)
-    // Space Complexity: O(1)
+    return nums1
 };

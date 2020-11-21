@@ -58,10 +58,9 @@ const candyCrush = function (board) {
             index = false
         }
         let array = []
+        debugger
         for (let column = 0; column < colWidth; column++) {
             let currRow = 0
-            if (column === 1) {
-            }
             while (currRow < rowWidth) {
                 if (board[currRow][column] !== 0) {
                     array.push(board[currRow][column])
