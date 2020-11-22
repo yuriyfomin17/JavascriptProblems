@@ -9,20 +9,20 @@ function TreeNode(val, left, right) {
  * @return {number[]}
  */
 // Time Complexity is O(N) where N is the number of nodes
-//Space complexity is O(H) where H is the height of the tree
-// at most it can be equal to the number of nodes in graph
+//Space complexity is O(D) where D is the diameter  of the tree
+    // This could contain at most N/2 nodes in case of complete binary tree
 const rightSideView = function (root) {
     if(!root){
-        return null
+        return []
     }
     const queue = [root]
     const result = []
     while (queue.length !== 0) {
         let size = queue.length
-        let currArr = []
+        let previous = null
         for (let i = 0; i < size; i++) {
             let currentNode = queue.shift()
-            currArr.push(currentNode.val)
+            previous = currentNode.val
             if (currentNode.left !== null) {
                 queue.push(currentNode.left)
             }
@@ -30,7 +30,7 @@ const rightSideView = function (root) {
                 queue.push(currentNode.right)
             }
         }
-        result.push(currArr[currArr.length-1])
+        result.push(previous)
     }
     return result
 };

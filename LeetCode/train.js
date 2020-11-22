@@ -1,48 +1,35 @@
 /**
- * // Definition for a Node.
- * function Node(val, left, right, next) {
- *    this.val = val === undefined ? null : val;
- *    this.left = left === undefined ? null : left;
- *    this.right = right === undefined ? null : right;
- *    this.next = next === undefined ? null : next;
- * };
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
  */
-
 /**
- * @param {Node} root
- * @return {Node}
+ * @param {TreeNode} root
+ * @return {number[]}
  */
-const connect = function (root) {
-    if (!root) {
+const rightSideView = function (root) {
+    if(!root){
         return null
     }
-    let leftmost = root
-
-    const helper = (child, previous, leftmost) => {
-        if (child) {
-            if (previous) {
-                previous.next = child
-            } else {
-                leftmost = child
-            }
-            previous = child
-
-        }
-        return [previous, leftmost]
-    }
-    while (leftmost) {
+    const queue = [root]
+    const result = []
+    while (queue.length !== 0) {
+        let size = queue.length
         let previous = null
-        let current = leftmost
-        leftmost = null
-        while (current) {
-            let result = helper(current.left, previous, leftmost)
-            result = helper(current.right, result[0], result[1])
-
-            previous = result[0]
-            leftmost = result[1]
-
-            current = current.next
+        for (let i = 0; i < size; i++) {
+            let currentNode = queue.shift()
+            previous = currentNode.val
+            if (currentNode.left !== null) {
+                queue.push(currentNode.left)
+            }
+            if (currentNode.right !== null) {
+                queue.push(currentNode.right)
+            }
         }
+        result.push(previous)
     }
-    return root
+    return result
 };
