@@ -8,28 +8,32 @@
  */
 /**
  * @param {TreeNode} root
- * @return {number[]}
+ * @param {number} k
+ * @return {number}
  */
-const rightSideView = function (root) {
-    if(!root){
-        return null
+const kthSmallest = function (root, k) {
+    if (!root) {
+        return -1
     }
-    const queue = [root]
-    const result = []
-    while (queue.length !== 0) {
-        let size = queue.length
-        let previous = null
-        for (let i = 0; i < size; i++) {
-            let currentNode = queue.shift()
-            previous = currentNode.val
-            if (currentNode.left !== null) {
-                queue.push(currentNode.left)
-            }
-            if (currentNode.right !== null) {
-                queue.push(currentNode.right)
-            }
+    if(k===0){
+        return root.val
+    }
+    const stack = []
+    let current = root
+    while (stack.length !== 0|| current!==null) {
+        while (current){
+
+            stack.push(current)
+
+            current = current.left
         }
-        result.push(previous)
+        let removed = stack.pop()
+
+        current = removed.right
+        k-=1
+        if(k===0){
+            return removed.val
+        }
     }
-    return result
+    return -1
 };

@@ -9,28 +9,36 @@ function TreeNode(val, left, right) {
  * @param {number} k
  * @return {number}
  */
-// TIme complexity is O(N) where N is the number of nodes in a Binary tree
-// Space complexity is O(H) where H is the height of the binary tree since we need stack to store all nodes
+// TIme complexity is O(H + k) where H is the tree height. This complexity is defined
+    // by the stack, which contain at least H+k elements, since before starting to pop out one has to go down
+    // to a leaf. This results in O(logN +k) for the balanced tree and O(N+k) for completely unbalanced
+    // tree with all the nodes in the left subtree
+
+// Space complexity is O(H) where H is the height of the binary tree since we need stack to store all nodes. That makes O(N)
+    // in the worst case of the skewed tree and O(logN) in the average case of the balanced tree
 const kthSmallest = function (root, k) {
-    const stack = []
-    let currNode = root
-    const result = []
-    if (k===0){
+    if (!root) {
+        return -1
+    }
+    if(k===0){
         return root.val
     }
-    while (stack.length !== 0 || currNode !== null) {
-        while (currNode !== null) {
-            stack.push(currNode)
-            result.push(currNode.val)
-            currNode = currNode.left
-        }
+    const stack = []
+    let current = root
+    while (stack.length !== 0|| current!==null) {
+        while (current){
 
-        k -= 1
+            stack.push(current)
+
+            current = current.left
+        }
         let removed = stack.pop()
-        if (k===0){
+
+        current = removed.right
+        k-=1
+        if(k===0){
             return removed.val
         }
-        currNode = removed.right
     }
-
+    return -1
 };
