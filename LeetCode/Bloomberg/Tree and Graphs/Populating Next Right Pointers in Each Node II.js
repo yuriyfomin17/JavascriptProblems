@@ -6,6 +6,10 @@ function TreeNode(val, left, right, next) {
 
 }
 
+// Time Complexity is O(N) since we process each node exactly once. Note that processing a node
+// in this context means popping the node from the queue and then establishing the next pointer
+
+// Space Complexity is O(N) since we have a stack where we contain our nodes
 const connect = function (root) {
     const queue = [root]
     if (!root) {
@@ -28,38 +32,41 @@ const connect = function (root) {
     }
     return root
 };
-const processChild = (childNode, prev, leftmost) => {
-    if (childNode) {
-        if (prev!==null) {
-            prev.next = childNode
-        } else {
-            leftmost = childNode
-        }
-        prev = childNode
-    }
-    return [prev, leftmost]
-}
-const connect2 = function (root) {
+
+
+// Time Complexity is O(N) since we process each node exactly once
+// Space Complexity is O(1) since we don't utilize any extra space
+const connect = function (root) {
     if (!root) {
         return null
     }
     let leftmost = root
-    let previous = null
-    let curr
-    let result
 
+    const helper = (child, previous, leftmost) => {
+        if (child) {
+            if (previous) {
+                previous.next = child
+            } else {
+                leftmost = child
+            }
+            previous = child
+
+        }
+        return [previous, leftmost]
+    }
     while (leftmost) {
-        previous = null
-        curr = leftmost
+        let previous = null
+        let current = leftmost
         leftmost = null
-        while (curr) {
-            result = processChild(curr.left, previous, leftmost)
-            result = processChild(curr.right, result[0], result[1])
+        while (current) {
+            let result = helper(current.left, previous, leftmost)
+            result = helper(current.right, result[0], result[1])
+
             previous = result[0]
             leftmost = result[1]
-            curr = curr.next
-        }
 
+            current = current.next
+        }
     }
     return root
 };

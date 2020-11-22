@@ -1,43 +1,48 @@
 /**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
+ * // Definition for a Node.
+ * function Node(val, left, right, next) {
+ *    this.val = val === undefined ? null : val;
+ *    this.left = left === undefined ? null : left;
+ *    this.right = right === undefined ? null : right;
+ *    this.next = next === undefined ? null : next;
+ * };
  */
+
 /**
- * @param {TreeNode} root
- * @return {void} Do not return anything, modify root in-place instead.
+ * @param {Node} root
+ * @return {Node}
  */
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {void} Do not return anything, modify root in-place instead.
- */
-const flatten = function (root) {
+const connect = function (root) {
     if (!root) {
         return null
     }
-    let current = root
-    while (current) {
-        if (current.left !== null) {
-            let rightMost = current.left
-            while (rightMost.right!==null){
-                rightMost = rightMost.right
-            }
-            rightMost.right = current.right
-            current.right = current.left
-            current.left = null
-        }
-        current = current.right
-    }
-};
+    let leftmost = root
 
+    const helper = (child, previous, leftmost) => {
+        if (child) {
+            if (previous) {
+                previous.next = child
+            } else {
+                leftmost = child
+            }
+            previous = child
+
+        }
+        return [previous, leftmost]
+    }
+    while (leftmost) {
+        let previous = null
+        let current = leftmost
+        leftmost = null
+        while (current) {
+            let result = helper(current.left, previous, leftmost)
+            result = helper(current.right, result[0], result[1])
+
+            previous = result[0]
+            leftmost = result[1]
+
+            current = current.next
+        }
+    }
+    return root
+};

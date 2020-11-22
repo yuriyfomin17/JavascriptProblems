@@ -43,38 +43,56 @@ const connect = function (root) {
     }
     return root
 };
-// Time complexity is O(N) in theory since we traverse each node only once
-// Space complexity is O(1) since we are changing tree in place without using extra space
-const connect2 = function (root) {
+// Time Complexity is O(N)=> O(N) since we are traversing the tree 1 time with Breadth First Search
+// Space complexity is O(N) = > O(N) since we utilize array queue to store results
+// to store nodes
+const connect = function (root) {
+    const queue = [root]
     if (!root) {
         return null
     }
-    const queue = [root]
     while (queue.length !== 0) {
-        let currNode = queue.shift()
-        if (currNode.left !== null) {
-            queue.push(currNode.left)
-        }
-        if (currNode.right !== null) {
-            queue.push(currNode.right)
-        }
-
-        let prevNode = currNode.left
-        let nextNode = currNode.right
-        while (nextNode !== null) {
-            prevNode.next = nextNode
-            nextNode = nextNode.next
-            if(currNode!==root&& currNode.next!==null){
-                currNode.right.next = currNode.next.left
-                currNode = currNode.next
-                prevNode = currNode.left
-                nextNode = currNode.right
+        let size = queue.length
+        for (let i = 0; i < size; i++) {
+            let currentNode = queue.shift()
+            if (i < size - 1) {
+                currentNode.next = queue[0]
             }
-
+            if (currentNode.left !== null) {
+                queue.push(currentNode.left)
+            }
+            if (currentNode.right !== null) {
+                queue.push(currentNode.right)
+            }
+        }
+    }
+    return root
+};
+// Time complexity is O(N) in theory since we traverse each node only once
+// Space complexity is O(1) since we are changing tree in place without using extra space
+const connect = function (root) {
+    if(!root){
+        return null
+    }
+    let leftMost = root
+    const helper = (list) => {
+        let current = list
+        let previous = null
+        while (current) {
+            if (previous) {
+                previous.next = current.left
+            }
+            current.left.next = current.right
+            previous = current.right
+            current = current.next
+        }
+    }
+    while (leftMost) {
+        if(leftMost.left && leftMost.right){
+            helper(leftMost)
         }
 
-
+        leftMost = leftMost.left
     }
-
     return root
 };
