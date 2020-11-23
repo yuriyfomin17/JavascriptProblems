@@ -1,54 +1,63 @@
-let alienOrder = (words) => {
-    let graph = {},
-        incoming = {};
 
-    // initialize empty graph
+// Time Complexity is O(C) where C is the total length of all words in the input list
+// Space Complexity is O(2*C + k) wince we store 2 dictionaries and k for queue where k is the current number of
+// elements with incoming degree of 0
+const alienOrder =  (words)=> {
+    const incomingDegree = {}
+    const orderChars = {}
+
+    // Create Data Structure for graph
     for (let word of words) {
         for (let char of word) {
-            graph[char] = new Set();
-            incoming[char] = 0;
+            if (!orderChars[char]) {
+                orderChars[char] = new Set()
+                incomingDegree[char] = 0
+            }
+
         }
     }
+    // build Graph
+    for (let i = 1; i < words.length; i++) {
+        let firstWord = words[i - 1]
+        let secondWord = words[i]
+        let minLength = Math.min(firstWord.length, secondWord.length)
+        let allSame = true
 
-    // build graph
-    for (let i = 1, len = words.length; i < len; i++) {
-        let first = words[i - 1];
-        let second = words[i];
-        let min = Math.min(first.length, second.length);
-        let allSame = true;
-        for (let j = 0; j < min; j++) {
-            let x = first[j];
-            let y = second[j];
-            if (x !== y) {
-                allSame = false;
-                if (!graph[x].has(y)) {
-                    graph[x].add(y);
-                    incoming[y]++;
+        for (let k = 0; k < minLength; k++) {
+            let firstChar = firstWord[k]
+            let secondChar = secondWord[k]
+            if (firstChar !== secondChar) {
+                allSame = false
+                if (!orderChars[firstChar].has(secondChar)) {
+                    orderChars[firstChar].add(secondChar)
+                    incomingDegree[secondChar] = incomingDegree[secondChar] + 1
                 }
-                break;
+                break
             }
         }
         // fast path => first word smaller with all characters same
-        if (allSame && first.length > second.length) return '';
+        if (allSame && firstWord.length > secondWord.length) return '';
     }
-
+    const queue = []
     // BFS with 0 incoming first
-    let str = '',
-        queue = [];
-    for (let char in incoming) {
-        if (incoming[char] === 0) queue.push(char);
-    }
-
-    while (queue.length) {
-        const char = queue.shift();
-        str += char;
-        for (let next of graph[char]) {
-            incoming[next]--;
-            if (incoming[next] === 0) {
-                queue.push(next);
-            }
+    for (let [key, value] of Object.entries(incomingDegree)) {
+        if (value === 0) {
+            queue.push(key)
         }
     }
 
-    return str.length === Object.keys(graph).length ? str : '';
-};
+    let str = ''
+    while (queue.length !== 0) {
+        let firstElem = queue.shift()
+        str = str + firstElem
+        let currSet = orderChars[firstElem]
+        for(let [char, value] of currSet.entries()){
+            incomingDegree[char] = incomingDegree[char] -1
+            if(incomingDegree[char]===0){
+                queue.push(char)
+            }
+        }
+
+    }
+    return str.length === Object.keys(incomingDegree).length ? str : '';
+}

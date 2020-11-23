@@ -1,39 +1,33 @@
 /**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
+ * @param {string} s
+ * @return {string}
  */
-/**
- * @param {TreeNode} root
- * @param {number} k
- * @return {number}
- */
-const kthSmallest = function (root, k) {
-    if (!root) {
-        return -1
-    }
-    if(k===0){
-        return root.val
-    }
+const decodeString = function (s) {
+    let str = ''
+    const arr = s.split('')
     const stack = []
-    let current = root
-    while (stack.length !== 0|| current!==null) {
-        while (current){
-
-            stack.push(current)
-
-            current = current.left
-        }
-        let removed = stack.pop()
-
-        current = removed.right
-        k-=1
-        if(k===0){
-            return removed.val
+    debugger
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== ']') {
+            stack.push(arr[i])
+        } else {
+            let currStr = ''
+            while (stack[stack.length - 1] !== '[') {
+                currStr = stack.pop() + currStr
+            }
+            stack.pop()
+            let num = ''
+            while (!isNaN(stack[stack.length - 1])) {
+                num = stack.pop() + num
+            }
+            currStr = currStr.repeat(num)
+            stack.push(currStr)
         }
     }
-    return -1
+    return stack.reduce((acc, val) => {
+        return acc + val
+    }, '')
 };
+console.log(
+    decodeString("100[leetcode]")
+)
