@@ -1,33 +1,25 @@
-/**
- * @param {string} s
- * @return {string}
- */
-const decodeString = function (s) {
-    let str = ''
-    const arr = s.split('')
-    const stack = []
-    debugger
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] !== ']') {
-            stack.push(arr[i])
-        } else {
-            let currStr = ''
-            while (stack[stack.length - 1] !== '[') {
-                currStr = stack.pop() + currStr
-            }
-            stack.pop()
-            let num = ''
-            while (!isNaN(stack[stack.length - 1])) {
-                num = stack.pop() + num
-            }
-            currStr = currStr.repeat(num)
-            stack.push(currStr)
-        }
+const flatten = function (head) {
+    if(!head){
+        return null
     }
-    return stack.reduce((acc, val) => {
-        return acc + val
-    }, '')
+    const stack = [head]
+    let previous = null
+    while (stack.length !== 0) {
+        let current = stack.pop()
+        if (previous) {
+            previous.next = current
+            current.prev = previous
+        }
+        if (current.next) {
+            stack.push(current.next)
+        }
+        if (current.child) {
+            stack.push(current.child)
+            current.child = null
+        }
+        previous = current
+
+    }
+
+    return head
 };
-console.log(
-    decodeString("100[leetcode]")
-)

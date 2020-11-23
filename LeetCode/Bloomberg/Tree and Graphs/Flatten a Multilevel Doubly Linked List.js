@@ -12,16 +12,16 @@ class Node {
  * @param {Node} head
  * @return {Node}
  */
+// TIme Complexity is O(N) since we visit each node eaxcatly once
+    // Space Complexity is O(N) since we keep N nodes in stack
 const flatten = function (head) {
     if(!head){
         return null
     }
     const stack = [head]
     let previous = null
-    const result = []
     while (stack.length !== 0) {
         let current = stack.pop()
-        result.push(current)
         if (previous) {
             previous.next = current
             current.prev = previous
@@ -36,10 +36,21 @@ const flatten = function (head) {
         previous = current
 
     }
-    for(let i =1 ; i<result.length; i++){
-        result[i-1].next = result[i]
-        result[i].prev = result[i-1]
 
-    }
     return head
+};
+// Recursive
+var flatten = function(head) {
+    let last = null;
+    const dfs = node => {
+        if(!node) return;
+        dfs(node.next);
+        dfs(node.child);
+        node.next = last;
+        if(last) last.prev = node;
+        node.child = null;
+        last = node;
+    };
+    dfs(head);
+    return head;
 };
