@@ -1,3 +1,29 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+// Time Complexity O(N*k) where N is the number of elements in array
+    // Space Complexity is O(N-k +1) for the output array
+    // Time Limit exceeded
+const maxSlidingWindow = function (nums, k) {
+        const result = []
+        const windowArray = []
+        debugger
+        for (let i = 0; i < nums.length; i++) {
+            if (windowArray.length !== k) {
+                windowArray.push(nums[i])
+            } else {
+                result.push(Math.max(...windowArray))
+                windowArray.shift()
+                windowArray.push(nums[i])
+            }
+        }
+        result.push(Math.max(...windowArray))
+        return result
+    };
+
+
 // Time Complexity is O(N*K) where N is the number of elements in array
 // Space Complexity is O(N-k+1) for the output array
 const maxSlidingWindow = function (nums, k) {
@@ -88,17 +114,19 @@ console.log(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
  * @param {number} k
  * @return {number[]}
  */
+// Time Complexity is O(N) since we iterate through the entire array once
+// Space Complexity is O(K) where K is the size of the window
 const maxSlidingWindow2 = function (nums, k) {
     const queue = []
     const result = []
     for (let i = 0; i < nums.length; i++) {
-        while (nums[i] > queue[queue.length-1]) {
+        while (nums[i] > queue[queue.length - 1]) {
             queue.pop()
         }
         queue.push(nums[i])
         if (i >= k - 1) {
             result.push(queue[0])
-            if(nums[i-k+1]===queue[0]){
+            if (nums[i - k + 1] === queue[0]) {
                 queue.shift()
             }
         }

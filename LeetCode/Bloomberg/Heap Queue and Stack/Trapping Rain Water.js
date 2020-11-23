@@ -28,6 +28,7 @@ const trap1 = function (height) {
 // Space complexity is O(N) we store the 2 times the height array in dictionary
 const trap2 = function (height) {
     const leftMax = {}
+    debugger
     leftMax[0] = height[0]
     for (let i = 1; i < height.length; i++) {
         leftMax[i] = Math.max(leftMax[i - 1], height[i])
@@ -44,6 +45,7 @@ const trap2 = function (height) {
     return ans
 
 };
+trap2([0,1,0,2,1,0,1,3,2,1,2,1])
 
 /**
  * @param {number[]} height
@@ -65,7 +67,7 @@ const trap3 = function (height) {
         } else {
             rightMax = Math.max(rightMax, height[right])
             ans = ans + rightMax - height[right]
-            right += 1
+            right -= 1
         }
     }
     return ans

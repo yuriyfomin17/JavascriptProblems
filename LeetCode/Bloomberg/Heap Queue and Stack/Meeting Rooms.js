@@ -12,6 +12,7 @@ const minMeetingRooms = function (intervals) {
         startTime.push(el[0])
         endTime.push(el[1])
     })
+    // Sort the intervals by start time
     startTime.sort((a, b) => {
         if (a > b) {
             return 1
@@ -19,6 +20,7 @@ const minMeetingRooms = function (intervals) {
             return -1
         }
     })
+    // Sort the interval by end time
     endTime.sort((a, b) => {
         if (a > b) {
             return 1
@@ -26,17 +28,25 @@ const minMeetingRooms = function (intervals) {
             return -1
         }
     })
+    // Two pointers in the algorithm
     let startPointer = 0
     let endPointer = 0
-    let numMeeting = 0
+    // Variable to keep track of max number of rooms used
+    let numMeetingRoom = 0
     while (startPointer < endTime.length) {
+        //if there is a meeting that has ended by the time the meeting
+        //at the startPointer starts
         if (startTime[startPointer] >= endTime[endPointer]) {
-            startPointer += 1
+            numMeetingRoom-=1
             endPointer += 1
-        } else {
-            startPointer+=1
-            numMeeting += 1
         }
+        // We do this irrespective of whether a room frees up or not
+        // if room got free, then this used_room+=1 wouldn't have any effect
+        // used rooms would have remain the same in that case. if no room was free,
+        //then this would increase used rooms
+        startPointer += 1
+        numMeetingRoom += 1
+
     }
-    return numMeeting
+    return numMeetingRoom
 };
