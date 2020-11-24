@@ -91,6 +91,8 @@ RandomizedSet.prototype.remove = function(val) {
         var idx = this.map[val] - 1;
         this.map[this.nums[this.nums.length - 1]] = idx + 1;
         delete this.map[val];
+
+
         var tmp = this.nums[idx];
         this.nums[idx] = this.nums[this.nums.length - 1];
         this.nums[this.nums.length - 1] = tmp;
