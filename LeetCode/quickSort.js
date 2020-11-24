@@ -1,3 +1,4 @@
+//Time Complexity is O(NlogN)
 const pivot = (arr, start = 0, end = arr.length + 1) => {
     const swap = (list, a, b) => [list[a], list[b]] = [list[b], list[a]];
 

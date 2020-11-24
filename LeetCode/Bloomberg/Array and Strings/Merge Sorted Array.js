@@ -18,9 +18,6 @@ merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3
 // Time Complexity: O(m+n)
 // Space Complexity: O(1)
 const merge = function (nums1, m, nums2, n) {
-    if (nums2.length > nums1.length) {
-        merge(nums2, n, nums1, m)
-    }
     let index2 = n - 1
     let index1 = m - 1
     let end = m + n - 1

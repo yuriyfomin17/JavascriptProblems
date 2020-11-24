@@ -1,102 +1,30 @@
-const merge = function (intervals) {
-    if(intervals.length===0){
-        return []
-    }
-    const start = []
-    const end = []
-    intervals.map(el => {
-        start.push(el[0])
-        end.push(el[1])
-    })
-    start.sort(function (a, b) {
-        if (a > b) {
-            return 1
-        } else {
-            return -1
-        }
-
-    })
-    end.sort(function (a, b) {
-        if (a > b) {
-            return 1
-        } else {
-            return -1
-        }
-
-    })
-    let currStart = start[0]
-    let currEnd = end[0]
-    let size = start.length
-
-    const result = []
-    for (let i = 1; i <= size - 1; i++) {
-        if (currEnd >= start[i]) {
-            currEnd = end[i]
-        } else {
-            result.push([currStart, currEnd])
-            currStart = start[i]
-            currEnd = end[i ]
-        }
-    }
-    result.push([currStart, currEnd])
-    return result
-};
 
 /**
  * @param {number[][]} intervals
  * @return {number[][]}
  */
-// TIme complexity is O(Nlog(N)) other then sorting we do a linear  scan of the list
-// Space complexity is O(n) where n is the number of elements in array of results
-
+// Time Complexity is O(Nlog(N)) + O(N) for iterating
+// Space Complexity is O(1)
 const merge = function (intervals) {
-    if(intervals.length===0){
+    if (intervals.length === 0) {
         return []
     }
     intervals.sort(function (a, b) {
-        if (a[0] > b[0]) {
+        if (a[0] >= b[0]) {
             return 1
         } else {
             return -1
         }
-
     })
-    let currEnd = intervals[0][1]
-    let currStart = intervals[0][0]
-    const result = []
-    for (let i = 1; i < intervals.length; i++) {
-        if (currStart <= intervals[i][0] && currEnd >= intervals[i][0]) {
-            currEnd = Math.max(currEnd, intervals[i][1])
-        } else {
-            result.push([currStart, currEnd])
-            currEnd = intervals[i][1]
-            currStart = intervals[i][0]
+    let pointer = 1
+    while (pointer < intervals.length) {
+        if (intervals[pointer - 1][1] >= intervals[pointer][0]) {
+            let end = Math.max(intervals[pointer][1], intervals[pointer - 1][1])
+            intervals[pointer - 1][1] = end
+            intervals.splice(pointer, 1)
+        }else {
+            pointer += 1
         }
-
     }
-    result.push([currStart, currEnd])
-    return result
-};
-console.log(merge([[1, 3], [2, 6], [8, 10], [15, 18]]))
-
-var merge = function(nums1, m, nums2, n) {
-    if (n === 0) return; // no need to do change anything
-
-    let idx1 = m-1, idx2 = n-1, end = m+n-1;
-    while (idx2 >= 0) {
-        if (nums1[idx1] > nums2[idx2]) {
-            // nums1[idx1] is greater than nums2[idx2]
-            nums1[end] = nums1[idx1];
-            idx1--;
-        } else {
-            // 1st case: nums1[idx1] is undefined
-            // 2nd case: nums2[idx2] is greater than nums1[idx1]
-            // 3rd case: nums2[idx2] is equal to nums1[idx1]
-            nums1[end] = nums2[idx2];
-            idx2--;
-        }
-        end--;
-    }
-    // Time Complexity: O(m+n)
-    // Space Complexity: O(1)
+    return intervals
 };
