@@ -2,25 +2,25 @@
  * @param {string} s
  * @return {string}
  */
-// Time Complexity is O(n^2 * k) since we iterate N*N and perform each time a check for current string of length k
+// Time Complexity is O(n^2 * k/2) since we iterate N*N and perform each time a check for current string of length k
 // Space Complexity is O(K) where K is the length of current string
 const longestPalindrome = function (s) {
-    debugger
     let result = ''
-    let currResult = ''
-    let index = true
+    debugger
     for (let start = 0; start < s.length; start++) {
-        for (let end = s.length; end >= 0; end--) {
-            currResult = s.slice(start, end)
-            index = true
-            for (let i = 0; i < currResult.length; i++) {
-                if (currResult[i] !== currResult[currResult.length - 1 - i]) {
+        for (let end = s.length ; end >= 0; end--) {
+            let currString = s.slice(start, end)
+            let index = true
+            for (let i = 0; i < currString.length/2 ; i++) {
+                if (currString[i] !== currString[currString.length - 1 - i]) {
                     index = false
                     break
                 }
             }
-            if (currResult.length >= result.length && index) {
-                result = currResult
+            if (index) {
+                if (currString.length > result.length) {
+                    result = currString
+                }
                 if (result.length === s.length) {
                     return result
                 }

@@ -1,34 +1,45 @@
 /**
- * @param {string[]} words
- * @param {number} k
- * @return {string[]}
+ * @param {string} s
+ * @return {string}
  */
-const topKFrequent = function (words, k) {
-    const set = new Set()
-    const dict = {}
+const longestPalindrome = function (s) {
+    if (s === '' || s === null) {
+        return ''
+    }
+
+    let maxPalindrome = ''
     debugger
-    words.map(el => {
-        set.add(el)
-        if (!dict[el]) {
-            dict[el] = 1
-        } else {
-            dict[el] = dict[el] + 1
+    const helper = (center) => {
+        let currPalindrome = ''
+        let left = center
+        let right = center
+        while (left >= 0 && right < s.length && s.charAt(left) === s.charAt(right)) {
+            currPalindrome = s.slice(left, right + 1)
+            left -= 1
+            right += 1
         }
-    })
-    words = Array.from(set)
-    words.sort(function (a, b) {
-        if (dict[a] > dict[b]) {
-            return -1
-        } else if (dict[a] < dict[b]) {
-            return 1
-        } else if (a > b) {
-            return 1
-        } else if (a < b) {
-            return -1
+        return currPalindrome
+    }
+    for (let i = 0; i < s.length; i++) {
+        let palindromeOne = helper(i)
+        let palindromeTwo = helper(i + 1)
+        if (palindromeOne.length > palindromeTwo.length) {
+            if (palindromeOne.length > maxPalindrome.length) {
+                maxPalindrome = palindromeOne
+            }
+        }else {
+            if (palindromeTwo.length > maxPalindrome.length) {
+                maxPalindrome = palindromeTwo
+            }
         }
-    })
-    return words.slice(0, k)
+        if(maxPalindrome.length===s.length){
+            return maxPalindrome
+        }
+    }
+    return maxPalindrome
+
 };
+
 console.log(
-    topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 2)
+    longestPalindrome("babad")
 )
