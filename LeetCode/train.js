@@ -1,45 +1,23 @@
 /**
- * @param {string} s
- * @return {string}
+ * Initialize your data structure here.
+ * @param {number} size
  */
-const longestPalindrome = function (s) {
-    if (s === '' || s === null) {
-        return ''
-    }
-
-    let maxPalindrome = ''
-    debugger
-    const helper = (center) => {
-        let currPalindrome = ''
-        let left = center
-        let right = center
-        while (left >= 0 && right < s.length && s.charAt(left) === s.charAt(right)) {
-            currPalindrome = s.slice(left, right + 1)
-            left -= 1
-            right += 1
-        }
-        return currPalindrome
-    }
-    for (let i = 0; i < s.length; i++) {
-        let palindromeOne = helper(i)
-        let palindromeTwo = helper(i + 1)
-        if (palindromeOne.length > palindromeTwo.length) {
-            if (palindromeOne.length > maxPalindrome.length) {
-                maxPalindrome = palindromeOne
-            }
-        }else {
-            if (palindromeTwo.length > maxPalindrome.length) {
-                maxPalindrome = palindromeTwo
-            }
-        }
-        if(maxPalindrome.length===s.length){
-            return maxPalindrome
-        }
-    }
-    return maxPalindrome
+const MovingAverage = function (size) {
 
 };
 
-console.log(
-    longestPalindrome("babad")
-)
+/**
+ * @param {number} val
+ * @return {number}
+ */
+MovingAverage.prototype.next = function (val) {
+
+};
+
+/**
+ * Your MovingAverage object will be instantiated and called as such:
+ * var obj = new MovingAverage(size)
+ * var param_1 = obj.next(val)
+ */
+
+

@@ -1,26 +1,25 @@
 // O(N^2) for every starting index, search continues till the end of the given string
 // Space complexity is O(N) where there is queue of almost n size
-const wordBreak = (s, wordDict) => {
+const wordBreak = function (s, wordDict) {
     const set = new Set(wordDict)
     const queue = [0]
     debugger
     while (queue.length !== 0) {
-        let start = queue.shift()
-        if (!set.has(start)) {
-            for (let i = start; i <= s.length; i++) {
-                let currString = s.slice(start, i)
+        let currStart = queue.shift()
+        if (currStart === s.length) {
+            return true
+        }
+        if (!set.has(currStart)) {
+            for (let start = currStart; start <= s.length; start++) {
+                let currString = s.slice(currStart, start)
                 if (set.has(currString)) {
-                    queue.push(i)
-                    if (i === s.length) {
-                        return true
-                    }
+                    queue.push(start)
                 }
             }
+            set.add(currStart)
         }
-        set.add(start)
-
     }
-    return false;
+    return false
 };
 console.log(
     wordBreak("catsandog", ["cats", "dog", "sand", "and", "cat"])
