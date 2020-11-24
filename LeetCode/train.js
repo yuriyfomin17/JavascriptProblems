@@ -1,37 +1,34 @@
 /**
- * @param {string} s
- * @return {string}
+ * @param {string[]} words
+ * @param {number} k
+ * @return {string[]}
  */
-// Time COmplexity is O(N) since we iterate 3 times
-    // Space Complexity is O(N) since we store 2*N elements in dict1 and dict2
-const frequencySort = function (s) {
-    const dictEl = {}
-    const dictCount = {}
+const topKFrequent = function (words, k) {
+    const set = new Set()
+    const dict = {}
     debugger
-    s = s.split('')
-    s.map(el => {
-        if (!dictEl[el]) {
-            dictEl[el] = 1
+    words.map(el => {
+        set.add(el)
+        if (!dict[el]) {
+            dict[el] = 1
         } else {
-            dictEl[el] = dictEl[el] + 1
+            dict[el] = dict[el] + 1
         }
     })
-    for (let [key, value] of Object.entries(dictEl)) {
-        if (!dictCount[value]) {
-            dictCount[value] = [key.repeat(value)]
-        } else {
-            dictCount[value].push(key.repeat(value))
+    words = Array.from(set)
+    words.sort(function (a, b) {
+        if (dict[a] > dict[b]) {
+            return -1
+        } else if (dict[a] < dict[b]) {
+            return 1
+        } else if (a > b) {
+            return 1
+        } else if (a < b) {
+            return -1
         }
-    }
-    let string = ''
-    for (let i = s.length; i >= 1; i--) {
-        if(dictCount[i]){
-
-            string = string + dictCount[i].reduce((acc,val)=>acc+val,'')
-        }
-
-    }
-    return string
+    })
+    return words.slice(0, k)
 };
-frequencySort(
-    "tree")
+console.log(
+    topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 2)
+)
