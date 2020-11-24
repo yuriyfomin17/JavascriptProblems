@@ -23,19 +23,29 @@ const reverse = function (x) {
 
 };
 
+// Time Complexity is O(N)
+// where N is the length of the string toString(Number)
 
-var reverse2 = function(num) {
-    debugger
-    let arr = [];
-    const sign = num > 0 ? 1 : -1 ;
-    num = Math.abs(num);
-    while(num) {
-        let digit = num%10;
-        arr.push(digit);
-        num = Math.floor(num/10);
+// Space Complexity is O(1)
+
+// Time Complexity
+const reverse = function (x) {
+    let result = ''
+    const sign = x < 0 ? -1 : 1
+    x = Math.abs(x)
+    while (x !== 0) {
+        let floored = Math.floor(x / 10)
+        let currNum = x - floored * 10
+        x = floored
+        result = result + currNum
     }
-    let res = Number(arr.join(''));
-    return res > Math.pow(2, 31) ? 0 : res*sign;
+    result = sign * Number(result)
+    debugger
+    if (result>0 && result > 2147483647) {
+        return  0
+    }
+    if (result<0 && Math.abs(result) > 2147483648) {
+        return  0
+    }
+    return result
 };
-
-reverse2(536)
