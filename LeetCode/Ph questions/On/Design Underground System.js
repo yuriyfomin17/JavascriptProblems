@@ -1,10 +1,13 @@
-
-
 // My Solution
+// Time Complexity is O(1) for all check in, check out and getAverage
 
-var UndergroundSystem = function () {
+// Space Complexity: O(P + S^2) where S is the number of stations on the network and P is the number of
+// passengers making a journey concurrently during peak time
+
+// P because we only store the P number of passengers in checkInTimes dictionary
+// while S^2 where S is the number of stations because we do expect to have every possible pair of number of stations
+const UndergroundSystem = function () {
     this.checkInTimes = {}
-    this.checkInStation = {}
     this.averageJourney = {}
 };
 
@@ -15,8 +18,7 @@ var UndergroundSystem = function () {
  * @return {void}
  */
 UndergroundSystem.prototype.checkIn = function (id, stationName, t) {
-    this.checkInTimes[id] = t
-    this.checkInStation[id] = stationName
+    this.checkInTimes[id] = [t, stationName]
 };
 
 /**
@@ -26,8 +28,8 @@ UndergroundSystem.prototype.checkIn = function (id, stationName, t) {
  * @return {void}
  */
 UndergroundSystem.prototype.checkOut = function (id, stationName, t) {
-    const startTime = this.checkInTimes[id]
-    const startStation = this.checkInStation[id]
+    const startTime = this.checkInTimes[id][0]
+    const startStation = this.checkInTimes[id][1]
     const journeyTime = t - startTime
     const key = '' + startStation + stationName
     if (!this.averageJourney[key]) {
@@ -48,7 +50,7 @@ UndergroundSystem.prototype.checkOut = function (id, stationName, t) {
  */
 UndergroundSystem.prototype.getAverageTime = function (startStation, endStation) {
     const key = '' + startStation + endStation
-    return this.averageJourney[key][0]/this.averageJourney[key][1]
+    return this.averageJourney[key][0] / this.averageJourney[key][1]
 
 };
 

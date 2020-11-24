@@ -1,64 +1,64 @@
-/**
- * @param {character[][]} board
- * @param {string} word
- * @return {boolean}
- */
-const exist = function (board, word) {
-    if (board.length === 0) {
-        return false
-    }
-
-    const rowWidth = board.length
-    const colWidth = board[0].length
-
-    if (word.length > rowWidth * colWidth) {
-        return false
-    }
-
-    const rowDirection = [1, -1, 0, 0]
-    const colDirection = [0, 0, -1, 1]
-
-    const helper = (currRow, currCol, startIndex) => {
-        if (board[currRow][currCol] !== word.charAt(startIndex)) {
-            return false
-        }
-        if (startIndex === word.length - 1) {
-            return true
-        }
-        board[currRow][currCol] = '-'
-        for (let i = 0; i < 4; i++) {
-            let newRow = currRow + rowDirection[i]
-            let newCol = currCol + colDirection[i]
-            if (newRow >= 0 && newRow < rowWidth && newCol >= 0 && newCol < colWidth && board[newRow][newCol] === word.charAt(startIndex + 1)) {
-                if(helper(newRow, newCol, startIndex + 1)){
-                    return true
-                }
-            }
-        }
-
-        board[currRow][currCol] = word.charAt(startIndex)
-        return false
-
-    }
-
-    debugger
-
-    for (let row = 0; row < rowWidth; row++) {
-        for (let col = 0; col < colWidth; col++) {
-            if (helper(row, col, 0)) {
-                return true
-            }
-        }
-    }
-    return false
+const UndergroundSystem = function () {
+    this.checkInTime = {}
+    this.checkInStation = {}
+    this.averageJourney = {}
 };
+
+/**
+ * @param {number} id
+ * @param {string} stationName
+ * @param {number} t
+ * @return {void}
+ */
+UndergroundSystem.prototype.checkIn = function (id, stationName, t) {
+    this.checkInTime[id] = t
+    this.checkInStation[id] = stationName
+};
+
+/**
+ * @param {number} id
+ * @param {string} stationName
+ * @param {number} t
+ * @return {void}
+ */
+UndergroundSystem.prototype.checkOut = function (id, stationName, t) {
+    const key = '' + this.checkInStation[id] + ',' + stationName
+    if (this.averageJourney[key]) {
+        const timeTravelled = t - this.checkInTime[id]
+        this.averageJourney[key][0] = this.averageJourney[key][0] + timeTravelled
+        this.averageJourney[key][1] = this.averageJourney[key][1] + 1
+    } else {
+        const timeTravelled = t - this.checkInTime[id]
+        this.averageJourney[key] = [timeTravelled, 1]
+    }
+
+};
+
+/**
+ * @param {string} startStation
+ * @param {string} endStation
+ * @return {number}
+ */
+UndergroundSystem.prototype.getAverageTime = function (startStation, endStation) {
+    const key = '' + startStation + ',' + endStation
+    if (this.averageJourney[key]) {
+        return this.averageJourney[key][0] / this.averageJourney[key][1]
+    }
+};
+
+const undergroundSystem = new UndergroundSystem();
+undergroundSystem.checkIn(45, "Leyton", 3);
+undergroundSystem.checkIn(32, "Paradise", 8);
+undergroundSystem.checkIn(27, "Leyton", 10);
+undergroundSystem.checkOut(45, "Waterloo", 15);
+undergroundSystem.checkOut(27, "Waterloo", 20);
+undergroundSystem.checkOut(32, "Cambridge", 22);
+
 console.log(
-    exist([
-        ["A","B","C","E"],
-        ["S","F","C","S"],
-        ["A","D","E","E"]
-    ], "ABCB")
-
-)
-
-
+    undergroundSystem.getAverageTime("Paradise", "Cambridge")
+)// return 14.00000. There was only one travel from "Paradise" (at time 8) to "Cambridge" (at time 22)
+undergroundSystem.getAverageTime("Leyton", "Waterloo");          // return 11.00000. There were two travels from "Leyton" to "Waterloo", a customer with id=45 from time=3 to time=15 and a customer with id=27 from time=10 to time=20. So the average time is ( (15-3) + (20-10) ) / 2 = 11.00000
+undergroundSystem.checkIn(10, "Leyton", 24);
+undergroundSystem.getAverageTime("Leyton", "Waterloo");          // return 11.00000
+undergroundSystem.checkOut(10, "Waterloo", 38);
+undergroundSystem.getAverageTime("Leyton", "Waterloo");          // return 12.00000
