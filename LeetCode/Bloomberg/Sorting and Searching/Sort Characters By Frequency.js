@@ -1,13 +1,27 @@
+const frequencySort1 = function(s) {
+    let m = new Map();
+    debugger
+    for (let i = 0; i < s.length; i++)
+        m.set(s[i], m.get(s[i])+1 || 1);
+    let arr = Array.from(m.entries());
+    arr.sort((a,b) => b[1]-a[1]);
+    return arr.map(pair => pair[0].repeat(pair[1])).join("");
+    // Time Complexity: O(nlog(n))
+    // Space Complexity: O(n)
+};
+
+
 /**
  * @param {string} s
  * @return {string}
  */
 // Time Complexity is O(N) -mapping + O(Nlog(N))-sorting + O(N) -mapping = O(Nlog(N))
 // Space Complexity is O(K) where K is the number of string stored
-const frequencySort = function (s) {
+const frequencySort2 = function (s) {
     let arr = s.split('')
     const set = new Set()
     const dict = {}
+    debugger
     arr.map(el => {
         set.add(el)
         if (!dict[el]) {
@@ -33,4 +47,4 @@ const frequencySort = function (s) {
         return acc + val
     },'')
 };
-console.log(frequencySort("loveleetcode"))
+console.log(frequencySort1("loveleetcode"))

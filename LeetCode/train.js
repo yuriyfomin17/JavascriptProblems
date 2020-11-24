@@ -1,34 +1,37 @@
 /**
- * @param {number[][]} intervals
- * @return {number[][]}
+ * @param {string} s
+ * @return {string}
  */
-
-// Time Complexity is O(Nlog(N)) + O(N) for iterating
-// Space Complexity is O(1)
-const merge = function (intervals) {
-    if (intervals.length === 0) {
-        return []
-    }
-
-    intervals.sort(function (a, b) {
-        if (a[0] >= b[0]) {
-            return 1
+// Time COmplexity is O(N) since we iterate 3 times
+    // Space Complexity is O(N) since we store 2*N elements in dict1 and dict2
+const frequencySort = function (s) {
+    const dictEl = {}
+    const dictCount = {}
+    debugger
+    s = s.split('')
+    s.map(el => {
+        if (!dictEl[el]) {
+            dictEl[el] = 1
         } else {
-            return -1
+            dictEl[el] = dictEl[el] + 1
         }
     })
-    let pointer = 1
-    while (pointer < intervals.length) {
-        if (intervals[pointer - 1][1] >= intervals[pointer][0]) {
-            let end = Math.max(intervals[pointer][1], intervals[pointer - 1][1])
-            intervals[pointer - 1][1] = end
-            intervals.splice(pointer, 1)
-        }else {
-            pointer += 1
+    for (let [key, value] of Object.entries(dictEl)) {
+        if (!dictCount[value]) {
+            dictCount[value] = [key.repeat(value)]
+        } else {
+            dictCount[value].push(key.repeat(value))
         }
     }
-    return intervals
+    let string = ''
+    for (let i = s.length; i >= 1; i--) {
+        if(dictCount[i]){
+
+            string = string + dictCount[i].reduce((acc,val)=>acc+val,'')
+        }
+
+    }
+    return string
 };
-console.log(
-    merge([[1, 4], [0, 2], [3, 5]])
-)
+frequencySort(
+    "tree")
