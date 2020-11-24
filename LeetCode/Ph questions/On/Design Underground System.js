@@ -5,7 +5,8 @@
 // passengers making a journey concurrently during peak time
 
 // P because we only store the P number of passengers in checkInTimes dictionary
-// while S^2 where S is the number of stations because we do expect to have every possible pair of number of stations
+// while S^2 where S is the number of stations because we do expect to have every
+// possible pair of number of stations
 const UndergroundSystem = function () {
     this.checkInTimes = {}
     this.averageJourney = {}
