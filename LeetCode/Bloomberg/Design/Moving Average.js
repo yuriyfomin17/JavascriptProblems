@@ -2,9 +2,9 @@
  * Initialize your data structure here.
  * @param {number} size
  */
-var MovingAverage = function (size) {
-    this.array = []
+const MovingAverage = function (size) {
     this.size = size
+    this.arr = []
     this.sum = 0
 };
 
@@ -13,15 +13,17 @@ var MovingAverage = function (size) {
  * @return {number}
  */
 MovingAverage.prototype.next = function (val) {
-    if (this.array.length + 1 <= this.size) {
-        this.array.push(val)
+    if (this.size >= this.arr.length+1) {
         this.sum = this.sum + val
-        return this.sum / this.array.length
+        this.arr.push(val)
+        const result = this.sum / this.arr.length
+        return result
     } else {
-        this.sum = this.sum - this.array.shift()
+        this.sum = this.sum - this.arr.shift()
         this.sum = this.sum + val
-        this.array.push(val)
-        return this.sum / this.array.length
+        this.arr.push(val)
+        const result = this.sum / this.arr.length
+        return result
     }
 };
 
