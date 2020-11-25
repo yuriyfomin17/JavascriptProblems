@@ -1,32 +1,45 @@
 /**
- * @param {number[]} nums1
- * @param {number[]} nums2
- * @return {number[]}
+ * @param {number[][]} intervals
+ * @return {number}
  */
-
-// Time Complexity is O(n1 + n2) where n1 is the length of nums1 and n2 is the length of nums2
-// Space Complexity is O(N) where N is the size of dictionary
-const intersection = function (nums1, nums2) {
-    const dict = {}
-
-    nums1.map(el => {
-        if(!dict[el]){
-            dict[el] = 1
-        }
+const minMeetingRooms = function (intervals) {
+    const start = []
+    const end = []
+    intervals.map(el => {
+        start.push(el[0])
+        end.push(el[1])
     })
 
-    const result = []
-
-    nums2.map(el=>{
-        if(dict[el]){
-            result.push(el)
-            delete dict[el]
+    start.sort(function (a, b) {
+        if (a >= b) {
+            return 1
+        } else {
+            return -1
         }
     })
-    return result
+    end.sort(function (a, b) {
+        if (a >= b) {
+            return 1
+        } else {
+            return -1
+        }
+
+    })
+    let numberRooms = 0
+    let startPointer = 0
+    let endPointer = 0
+    while (startPointer < start.length) {
+        if (end[endPointer] <= start[startPointer + 1]) {
+            numberRooms -= 1
+            endPointer+=1
+        }
+        startPointer+=1
+        numberRooms += 1
+    }
+    return numberRooms
 };
 console.log(
-    intersection([4,9,5], [9,4,9,8,4])
+    minMeetingRooms([[0, 30],[5, 10],[15, 20]])
 
 )
 

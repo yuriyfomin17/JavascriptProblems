@@ -37,7 +37,7 @@ const minMeetingRooms = function (intervals) {
         //if there is a meeting that has ended by the time the meeting
         //at the startPointer starts
         if (startTime[startPointer] >= endTime[endPointer]) {
-            numMeetingRoom-=1
+            numMeetingRoom -= 1
             endPointer += 1
         }
         // We do this irrespective of whether a room frees up or not
