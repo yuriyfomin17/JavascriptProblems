@@ -2,8 +2,8 @@
  * Initialize your data structure here.
  */
 const RandomizedSet = function () {
-    this.dict = {}
     this.nums = []
+    this.map = {}
 };
 
 /**
@@ -12,8 +12,8 @@ const RandomizedSet = function () {
  * @return {boolean}
  */
 RandomizedSet.prototype.insert = function (val) {
-    if (!this.dict[val]) {
-        this.dict[val] = this.nums.length
+    if (this.map[val]===undefined) {
+        this.map[val] = this.nums.length
         this.nums.push(val)
         return true
     }
@@ -26,11 +26,19 @@ RandomizedSet.prototype.insert = function (val) {
  * @return {boolean}
  */
 RandomizedSet.prototype.remove = function (val) {
-    if (this.dict[val]) {
-        this.nums.splice()
+    if (this.map[val]!==undefined) {
+        const indexToDelete = this.map[val]
+        const lastElemArr = this.nums[this.nums.length - 1]
+        this.map[lastElemArr] = indexToDelete
+        delete this.map[val]
+
+        this.nums[indexToDelete] = lastElemArr
+        this.nums[this.nums.length - 1] = val
+        this.nums.pop()
         return true
     }
     return false
+
 };
 
 /**
@@ -38,9 +46,8 @@ RandomizedSet.prototype.remove = function (val) {
  * @return {number}
  */
 RandomizedSet.prototype.getRandom = function () {
-    const arr = Object.keys(this.dict)
-    const randomIndex = Math.floor(Math.random() * arr.length)
-    return arr[randomIndex]
+    const randomIndex = Math.floor(Math.random() * this.nums.length)
+    return this.nums[randomIndex]
 
 };
 debugger
@@ -51,4 +58,4 @@ randomizedSet.insert(2); // Inserts 2 to the set, returns true. Set now contains
 randomizedSet.getRandom(); // getRandom() should return either 1 or 2 randomly.
 randomizedSet.remove(1); // Removes 1 from the set, returns true. Set now contains [2].
 randomizedSet.insert(2); // 2 was already in the set, so return false.
-randomizedSet.getRandom(); // Since 2 is the only number in the set, getRandom() will always return 2.
+randomizedSet.getRandom();
