@@ -16,7 +16,7 @@ var groupAnagrams1 = function(strs) {
     return Object.values(res);
 };
 
-// TIme complexity is O(N*logK) where k is the length of the string and Nis the number of strings in array
+// TIme complexity is O(N*k*logk) where k is the length of the string and Nis the number of strings in array
 // Space Complexity is O(N)  where N is the number of strings
 const groupAnagrams2 = strs => {
     const map = {};
