@@ -13,66 +13,97 @@
 //Time Complexity is O(N1) + O(N2) + O(Max(N1,N2)) + O(N3) which is O(N)
 // Space complexity is O(N) where N is the number of links in final answer
 const addTwoNumbers = function (l1, l2) {
-    let head1
-    let previous = null
-    let current = l1
-    while (current) {
-        let next = current.next
-        current.next = previous
-        previous = current
-        current = next
+    const findLength = (list) => {
+        let count = 0
+        let current = list
+        while (current) {
+            count += 1
+            current = current.next
+        }
+        return count
     }
-    head1 = previous
-
-
-    let head2
-    current = l2
-    previous = null
-    while (current) {
-        let next = current.next
-        current.next = previous
-        previous = current
-        current = next
+    const reverse = (list) => {
+        let current = list
+        let previous = null
+        while (current) {
+            let next = current.next
+            current.next = previous
+            previous = current
+            current = next
+        }
+        return previous
     }
-    head2 = previous
 
-    let current1 = head1
-    let current2 = head2
-    let head3 = null
+    let length1 = findLength(l1)
+    let length2 = findLength(l2)
+
+    let current1 = l1
+    let current2 = l2
     let current3 = null
-    let carry = 0
-    while (current1 || current2 || carry !== 0) {
+    let head3 = null
+
+    while (current1 || current2) {
         let val1 = current1 === null ? 0 : current1.val
         let val2 = current2 === null ? 0 : current2.val
-        let val = val1 + val2 + carry
-        if (val >= 10) {
-            val = val - 10
+
+
+        if (length1 === length2) {
+            if (head3 === null) {
+                head3 = new ListNode(val1 + val2, null)
+                current3 = head3
+            } else {
+                current3.next = new ListNode(val1 + val2, null)
+                current3 = current3.next
+            }
+
+            current1 = current1.next
+            current2 = current2.next
+
+        } else {
+            if (head3 === null) {
+                head3 = new ListNode(0, null)
+                current3 = head3
+            } else {
+                current3.next = new ListNode(0, null)
+                current3 = current3.next
+            }
+            if (length1 > length2) {
+                current3.val = current1.val
+                current1 = current1.next
+                length1 -= 1
+            } else {
+                current3.val = current2.val
+                current2 = current2.next
+                length2 -= 1
+            }
+        }
+
+    }
+
+    head3 = reverse(head3)
+
+    current3 = head3
+    let carry = 0
+    let previous3 = null
+    while (current3) {
+        let val3 = current3.val + carry
+        if (val3 >= 10) {
+            current3.val = val3 - 10
             carry = 1
         } else {
+            current3.val = val3
             carry = 0
         }
-        let node = new ListNode(val)
-        if (head3 === null) {
-            head3 = node
-            current3 = head3
-        } else {
-            current3.next = node
-            current3 = current3.next
-        }
-        current2 = current2 === null ? null : current2.next
-        current1 = current1 === null ? null : current1.next
-
+        previous3 = current3
+        current3 = current3.next
     }
-    current3 = head3
-    previous = null
-    while (current3) {
-        let next = current3.next
-        current3.next = previous
-        previous = current3
-        current3 = next
+    if (carry > 0) {
+        previous3.next = new ListNode(carry, null)
     }
 
-    return previous
+    head3 = reverse(head3)
+    return head3
+
 };
 
 /**
@@ -168,14 +199,19 @@ const addTwoNumbers = function (l1, l2) {
     current3 = head3
     let carry = 0
     let previous = null
-
-    while (current3) {
-        let next = current3.next
-        current3.next = previous
-        previous = current3
-        current3 = next
+    const reverse = (list) => {
+        let current = list
+        let previous = null
+        while (current) {
+            let next = current.next
+            current.next = previous
+            previous = current
+            current = next
+        }
+        return previous
     }
-    head3 = previous
+
+    head3 = reverse(current3)
     current3 = head3
     while (current3) {
         let val3 = current3.val + carry
@@ -190,20 +226,14 @@ const addTwoNumbers = function (l1, l2) {
         current3 = current3.next
 
     }
-    if(carry>0){
+    if (carry > 0) {
         previous.next = new ListNode(carry)
     }
     current3 = head3
 
     previous = null
 
-    while (current3) {
-        let next = current3.next
-        current3.next = previous
-        previous = current3
-        current3 = next
-    }
-    head3 = previous
+    head3 = reverse(current3)
     return head3
 
 };
