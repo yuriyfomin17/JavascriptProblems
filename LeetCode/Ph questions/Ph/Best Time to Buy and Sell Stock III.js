@@ -2,26 +2,24 @@
  * @param {number[]} prices
  * @return {number}
  */
-/**
- * @param {number[]} prices
- * @return {number}
- */
-var maxProfit = function(prices) {
-    let cost1 = Infinity;
-    let cost2 = Infinity;
+const maxProfit = function (prices) {
+    let minStock1 = Infinity
+    let maxProfit1 = -Infinity
+
+    let minStock2 = Infinity
+    let maxProfit2 = -Infinity
     debugger
-    return prices.reduce(
-        ([profit1, profit2], price) => {
-            cost1 = Math.min(cost1, price);
-            profit1 = Math.max(profit1, price - cost1)
+    for (let i = 0; i < prices.length; i++) {
+        // the maximum profit if only one transaction allowed
+        minStock1 = Math.min(minStock1, prices[i])
+        maxProfit1 = Math.max(maxProfit1, prices[i] - minStock1)
 
-            cost2 = Math.min(cost2, price - profit1);
-            profit2 = Math.max(profit2, price - cost2)
+        // reinvest the gained profit in the second transaction
+        minStock2 = Math.min(minStock2, prices[i] - maxProfit1)
+        maxProfit2 = Math.max(maxProfit2, prices[i] - minStock2)
+    }
 
-            return [profit1, profit2]
-        },
-        [0, 0]
-    )[1];
+
+    return maxProfit2
+
 };
-maxProfit(
-    [3,3,5,0,0,3,1,4])

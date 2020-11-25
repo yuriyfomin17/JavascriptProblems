@@ -2,34 +2,43 @@
  * @param {number[]} prices
  * @return {number}
  */
-// TIme Complexity is O(n^2) as loops run n*(n-1)/2
+// TIme Complexity is O(n) as we iterate only one time
 // Space Complexity is O(1)
+
 const maxProfit = function (prices) {
-    let maxProfit = 0
+    if (prices.length === 0) {
+        return 0
+    }
+    let minStock = Infinity
+    let maxProfit = -Infinity
     for (let i = 0; i < prices.length; i++) {
-        for (let j = i + 1; j < prices.length; j++) {
-            if (prices[j] - prices[i] > maxProfit) {
-                maxProfit = prices[j] - prices[i]
-            }
+        if (minStock > prices[i]) {
+            minStock = prices[i]
+        }
+        if (prices[i] - minStock > maxProfit) {
+            maxProfit = prices[i] - minStock
         }
     }
     return maxProfit
 };
 
-maxProfit([2, 4, 1])
+const maxProfit = function (prices) {
+    if (prices.length === 0) {
+        return 0
+    }
+    let minStock1 = Infinity
+    let maxProfit1 = -Infinity
 
 
-const maxProfit2 = function (prices) {
-    let minPrice = Infinity
-    let maxProfit = 0
     for (let i = 0; i < prices.length; i++) {
-        if(prices[i]<minPrice){
-            minPrice = prices[i]
-        }else if(maxProfit< prices[i]-minPrice){
+        // the maximum profit if only one transaction allowed
+        minStock1 = Math.min(minStock1, prices[i])
+        maxProfit1 = Math.max(maxProfit1, prices[i] - minStock1)
 
-            maxProfit = prices[i]-minPrice
-        }
 
     }
-    return maxProfit
+
+
+    return maxProfit1
+
 };
