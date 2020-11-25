@@ -1,38 +1,30 @@
+// TIme Complexity is n^2/k where n is a string length. We scan through the string
+// no more than n/k times
 
-// TIme Complexity is n^2/k
 // Space complexity is O(1)
-var removeDuplicates = function (s, k) {
-    s = s.split('');
-
-    let length = -1;
-    // when the length changes, iterate again
+const removeDuplicates = function (s, k) {
+    s = s.split('')
+    let length = -1
+    debugger
     while (length !== s.length) {
-        // remember the length of current string
-        length = s.length;
-        // reset count for each new iteration
-        for (let i = 0, count = 1; i < s.length; ++i) {
-            // when first or current is not equal to previous
-            if (i === 0 || s[i] !== s[i - 1]) {
-                // reset count to 1
-                count = 1;
-                // if the current is the same as previous one
-            } else {
-                // increase the count
-                count++;
-                // if the count equals to k
+        length = s.length
+        let count = 1
+        for (let i = 1; i < s.length; i++) {
+            if (s[i - 1] === s[i]) {
+                count += 1
                 if (count === k) {
-                    // delete the last k characters
-                    s.splice(i - k + 1, k);
-                    // leave the loop
-                    break;
+                    s.splice(i - k + 1, k)
+                    break
                 }
+            } else {
+                count = 1
             }
         }
     }
-    return s.join('');
+    return s.join('')
 };
-// Time Complexity is O(N)
-// Space complexity is O(N)
+// Time Complexity is O(N) where N is the string length
+// Space complexity is O(N) and N is the stack length and we have N chars in stack
 var removeDuplicates2 = function (s, k) {
     debugger
     let stack = [];
@@ -53,4 +45,4 @@ var removeDuplicates2 = function (s, k) {
     return s.join('');
 };
 
-removeDuplicates2("deeedbbcccbdaa",3)
+removeDuplicates2("deeedbbcccbdaa", 3)
