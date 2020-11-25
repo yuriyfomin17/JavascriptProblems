@@ -27,49 +27,52 @@ const calcEquation = function (equations, values, queries) {
         return -1
     }
     const result = []
+
     for (let i = 0; i < queries.length; i++) {
         const source = queries[i][0]
         const destination = queries[i][1]
         if (!graph[source] || !graph[destination]) {
+
             result.push(-1)
+
         } else if (graph[source] && destination === source) {
+
             result.push(1)
+
         } else if (graph[source] && graph[destination] && source !== destination) {
+
             const queue = [[graph[source], 1, source]]
             debugger
             const visited = {}
             visited[source] = 1
             let index = false
             while (queue.length !== 0) {
-                const [possiblePaths, nodeValue, name] = queue.shift()
+                // possible paths, parent path weight and vertex name are shifted from queue
+                const [possiblePaths, parentPathWeight, VertexName] = queue.shift()
 
-
-                if (name === destination) {
-                    result.push(nodeValue)
+                // if vertex name is equal to destination this means we have found our path
+                if (VertexName === destination) {
+                    result.push(parentPathWeight)
                     index = true
                     break
                 }
                 for (let i = 0; i < possiblePaths.length; i++) {
-                    let [nodeName, currVal] = possiblePaths[i]
-                    if (!visited[nodeName]) {
-                        queue.push([graph[nodeName], nodeValue * currVal, nodeName])
-                        visited[nodeName] = 1
+                    let [currentVertex, currentEdgeValue] = possiblePaths[i]
+                    if (!visited[currentVertex]) {
+                        queue.push([graph[currentVertex], parentPathWeight * currentEdgeValue, currentVertex])
+                        visited[currentVertex] = 1
                     }
                 }
 
             }
+            // if we exited the loop but not path for source adn target is found then -1 added
             if(!index){
-
                 result.push(-1)
             }
         }
+
     }
     return result
 };
-console.log(
-    calcEquation(
-        [["a","b"],["c","d"]],
-        [1.0, 1.0],
-        [["a","c"],["b","d"],["b","a"],["d","c"]]
-    )
-)
+
+calcEquation([["a", "b"], ["b", "c"]], [2.0, 3.0], [["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"]])
