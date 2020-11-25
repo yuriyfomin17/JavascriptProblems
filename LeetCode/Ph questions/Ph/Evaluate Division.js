@@ -4,6 +4,11 @@
  * @param {string[][]} queries
  * @return {number[]}
  */
+// TIme Complexity is O(M*N + N). Firstly, we build the graph which takes O(N) where N is the number of nodes
+    // Secondly we M queries and in worst case for each query we BFS all the graph which is O(N)
+
+    // Space Complexity is O(N*N) since in worst case we can have fully connected graph where each node
+    // edge connected to next node
 const calcEquation = function (equations, values, queries) {
     const graph = {}
     // Build Graph
