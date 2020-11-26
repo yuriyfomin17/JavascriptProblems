@@ -231,7 +231,6 @@ const addTwoNumbers = function (l1, l2) {
     }
     current3 = head3
 
-    previous = null
 
     head3 = reverse(current3)
     return head3
