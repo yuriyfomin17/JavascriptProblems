@@ -9,7 +9,7 @@
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
-const mergeKLists = function(lists) {
+const mergeKLists = function (lists) {
     if (lists.length === 0) return null;
     let newHead = new ListNode();
     let cur = newHead;
@@ -37,3 +37,40 @@ const mergeKLists = function(lists) {
 We advance the head with the smallest value by one as well.
 4. Repeat 1,2,3 until there is no more node to traverse.
 */
+
+
+// Time Complexity is O(Nlog(N)) where N is the total number of nodes
+// Collecting takes O(N) + sorting O(Nlog(N)) + iterating O(N)
+
+// Space Complexity is O(N)
+const mergeKLists = function (lists) {
+    const nodes = []
+
+    for (let i = 0; i < lists.length; i++) {
+        let currentHead = lists[i]
+        while (currentHead) {
+            nodes.push(currentHead)
+            currentHead = currentHead.next
+        }
+    }
+    nodes.sort(function (a, b) {
+        if (a.val >= b.val) {
+            return 1
+        } else {
+            return -1
+        }
+    })
+    let head = null
+    let current = null
+    for (let i = 0; i < nodes.length; i++) {
+        if(head===null){
+            head=nodes[i]
+            current = head
+        }else {
+            current.next = nodes[i]
+            current = current.next
+        }
+    }
+    return head
+
+};
