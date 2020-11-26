@@ -35,7 +35,6 @@ const lengthOfLongestSubstringBrute = function (s) {
 // Space complexity is O(K) which is the size of the dictionary where K in worst cases will be the length of the string
 
 const lengthOfLongestSubstring = function (s) {
-    debugger
     if(s.length===0){
         return 0
     }
@@ -58,26 +57,26 @@ const lengthOfLongestSubstring = function (s) {
 };
 
 console.log(lengthOfLongestSubstring("pwwkew"))
-var merge = function(nums1, m, nums2, n) {
-    if (n === 0) return; // no need to do change anything
 
-    let idx1 = m-1, idx2 = n-1, end = m+n-1;
-    while (idx2 >= 0) {
-        if (nums1[idx1] > nums2[idx2]) {
-            // nums1[idx1] is greater than nums2[idx2]
-            nums1[end] = nums1[idx1];
-            idx1--;
-        } else {
-            // 1st case: nums1[idx1] is undefined
-            // 2nd case: nums2[idx2] is greater than nums1[idx1]
-            // 3rd case: nums2[idx2] is equal to nums1[idx1]
-            nums1[end] = nums2[idx2];
-            idx2--;
+// Time Complexity is O(n^2)
+// Space Complexity is O(1)
+var lengthOfLongestSubstringNoMap = function(s) {
+    let longest = 0;
+    let current = "";
+    debugger
+    for (let i = 0; i < s.length; i++) {
+        current = current.substring(current.indexOf(s[i]) + 1)
+        current += s[i];
+
+        if (current.length > longest) {
+            longest = current.length;
         }
-        end--;
     }
-    // Time Complexity: O(m+n)
-    // Space Complexity: O(1)
+
+    return longest;
 };
+
+console.log(lengthOfLongestSubstringNoMap("pwwkew"))
+
 
 
