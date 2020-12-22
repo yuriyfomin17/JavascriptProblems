@@ -11,7 +11,8 @@
  * @return {boolean}
  */
 // Time Complexity is O(N) where N is the number of nodes that we need to traverse. At most we will traverse N nodes
-// Space Complexity is O(N) where N is the number of nodes that we keep in the stack
+// Space complexity is O(1) at the best case when incorrect node has right child while in worst case is O(H)
+// where H is the height of the tree
 const isValidBST = function (root) {
     if (!root) {
         return null
