@@ -10,6 +10,10 @@
  * @param {TreeNode} p
  * @return {TreeNode}
  */
+
+// Time Complexity is O(N) since we traverse at most N number of nodes
+// Space complexity is O(1) at the best case when p node has right child while in worst case is O(H)
+// where H is the height of the tree
 const inorderSuccessor = function (root, p) {
     if (!root || !p) {
         return null
