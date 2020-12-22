@@ -10,31 +10,27 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-// Time complexity is O(N) since we cross each node only once at a time
-// SPace complexity is O(K) since we store values of nodes in array
+// Time Complexity is O(N) where N is the number of nodes that we need to traverse. At most we will traverse N nodes
+// Space complexity is O(1) at the best case when incorrect node has right child while in worst case is O(H)
+// where H is the height of the tree
 const isValidBST = function (root) {
     if (!root) {
-        return true
+        return null
     }
     const stack = []
-    let current = root
-    const result = []
-    while (current !== null || stack.length !== 0) {
-        while (current !== null) {
-            stack.push(current)
-            current = current.left
+    let currNode = root
+    let previous = null
+    while (stack.length !== 0 || currNode !== null) {
+        while (currNode) {
+            stack.push(currNode)
+            currNode = currNode.left
         }
         let removed = stack.pop()
-        if(result.length!==0){
-            if(result[result.length-1]>=removed.val){
-                return false
-            }else{
-                result.push(removed.val)
-            }
-        }else{
-            result.push(removed.val)
+        if(previous!==null && previous>=removed.val){
+            return false
         }
-        current = removed.right
+        previous = removed.val
+        currNode = removed.right
     }
     return true
 };
