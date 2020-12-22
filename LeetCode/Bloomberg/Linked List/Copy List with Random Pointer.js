@@ -17,7 +17,7 @@ const copyRandomList = function (head) {
     const newHead = new Node(head.val)
     dict.set(head, newHead)
     let currentOld = head
-    let currentNew = newHead
+
     while (currentOld) {
         if (currentOld.next) {
             if (!dict.has(currentOld.next)) {

@@ -78,7 +78,6 @@ const frequencySort = function (s) {
         let string = ''
         for (let i = s.length; i >= 1; i--) {
             if(dictCount[i]){
-
                 string = string + dictCount[i].reduce((acc,val)=>acc+val,'')
             }
 

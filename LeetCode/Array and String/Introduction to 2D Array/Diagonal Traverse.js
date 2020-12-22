@@ -16,7 +16,7 @@ const findDiagonalOrder = function (matrix) {
         }
     }
     let entries = dict.entries();
-    let diagonal = 0
+
     let result = []
     for (let entry of entries) {
 
@@ -25,7 +25,7 @@ const findDiagonalOrder = function (matrix) {
         }else{
             result.push(...entry[1])
         }
-        diagonal += 1
+
     }
     return result
 

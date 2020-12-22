@@ -13,7 +13,6 @@ const isValid = function (s) {
         } else {
             if (stack[stack.length - 1] === '{' && arr[i] === '}') {
                 stack.pop()
-
             } else if (stack[stack.length - 1] === '(' && arr[i] === ')') {
                 stack.pop()
             } else if (stack[stack.length - 1] === '[' && arr[i] === ']') {
