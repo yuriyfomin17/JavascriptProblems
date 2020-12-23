@@ -19,45 +19,46 @@
 
     // Space Complexity is O(H) to keep the recursion stack where H = log N for the balanced tree
 const deleteNode = function (root, key) {
-    if (!root) {
-        return null
-    }
-    const successor = (node) => {
-        // One Step right and then always left
-        node = node.right
-        while (node.left) {
-            node = node.left
+        if (!root) {
+            return null
         }
-        return node.val
-    }
-    const predecessor = (node) => {
-        // One step left and then always right
-        node = node.left
-        while (node.right) {
+        const successor = (node) => {
+            // One Step right and then always left
             node = node.right
+            while (node.left) {
+                node = node.left
+            }
+            return node.val
         }
-        return node.val
-    }
-    // delete from the right subtree
-    if (key > root.val) {
-        root.right = deleteNode(root.right, key)
-    // delete from the left subtree
-    } else if (key < root.val) {
-        root.left = deleteNode(root.left, key)
-    // delete current node
-    } else {
-        // node is leaf
-        if (!root.left && !root.right) {
-            root = null
-            // node is not leaf and has right child
-        } else if (root.right) {
-            root.val = successor(root)
-            root.right = deleteNode(root.right, root.val)
-        }else {
-            // node is not leaf and has left child
-            root.val = predecessor(root)
-            root.left = deleteNode(root.left, root.val)
+        const predecessor = (node) => {
+            // One step left and then always right
+            node = node.left
+            while (node.right) {
+                node = node.right
+            }
+            return node.val
         }
-    }
-    return root
-};
+        // delete from the right subtree
+        if (key > root.val) {
+            root.right = deleteNode(root.right, key)
+            // delete from the left subtree
+        } else if (key < root.val) {
+            root.left = deleteNode(root.left, key)
+            // delete current node
+        } else {
+            // node is leaf
+            if (!root.left && !root.right) {
+                root = null
+                // node is not leaf and has right child
+            } else if (root.right) {
+                root.val = successor(root)
+                root.right = deleteNode(root.right, root.val)
+            } else {
+                // node is not leaf and has left child
+                root.val = predecessor(root)
+                root.left = deleteNode(root.left, root.val)
+            }
+        }
+        return root
+    };
+
