@@ -11,8 +11,6 @@
  * @param {number} key
  * @return {TreeNode}
  */
-// Time Complexity in best case is Olog(N) where N is the number of nodes in best case but O(N) in worst case
-// Space Complexity is O(1) since we don't use any extra memeory to keep tree
 const deleteNode = function (root, key) {
     if (!root) {
         return null
@@ -24,6 +22,7 @@ const deleteNode = function (root, key) {
         }
         return node.val
     }
+
     const predecessor = (node) => {
         node = node.left
         while (node.right) {
@@ -42,19 +41,20 @@ const deleteNode = function (root, key) {
             previous = currNode
             currNode = currNode.right
         } else if (currNode.val === key) {
-            if(previous===null && currNode.left === null && currNode.right === null){
+            if (previous === null && currNode.left === null && currNode.right === null) {
                 return null
             }
-            if (previous!==null && currNode.left === null && currNode.right === null) {
+            if (previous && !currNode.left && !currNode.right) {
                 previous.left === currNode ? previous.left = null : previous.right = null
                 return root
             }
-            if(currNode.right){
+
+            if (currNode.right) {
                 currNode.val = successor(currNode)
                 previous = currNode
                 key = currNode.val
                 currNode = currNode.right
-            }else {
+            } else  {
                 currNode.val = predecessor(currNode)
                 previous = currNode
                 key = currNode.val
@@ -62,5 +62,5 @@ const deleteNode = function (root, key) {
             }
         }
     }
-    return root
+    return  root
 };
