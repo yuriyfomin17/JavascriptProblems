@@ -5,6 +5,45 @@
  *     this.left = this.right = null;
  * }
  */
+
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+// Time Complexity is O(N) if tree is completely unbalanced and O(logN) if it is balanced
+// Space Complexity is O(1) since we don't use any extra memory
+const lowestCommonAncestor = function (root, p, q) {
+    const qValue = q.val
+    const pValue = p.val
+    let currNode = root
+    // Traverse the tree
+    while (currNode) {
+        let parentValue = currNode.val
+        if (pValue > parentValue && qValue > parentValue) {
+            // if both p and q are greater than parents
+            currNode = currNode.right
+        } else if (pValue < parentValue && qValue < parentValue) {
+            // if both p and q are less then parents
+            currNode = currNode.left
+        }else {
+            // we Have found the split return lowest common ancestor
+            return currNode
+        }
+    }
+    return null
+};
+
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
 /**
  * @param {TreeNode} root
  * @param {TreeNode} p
@@ -18,50 +57,30 @@ const lowestCommonAncestor = function (root, p, q) {
     if (!root) {
         return null
     }
-    const queue = [root]
-    let current
     const parents = new Map()
+    const queue = [root]
     parents.set(root, null)
-    while (!parents.has(p) || !parents.has(q)) {
-        current = queue.shift()
-
-        if (current.left !== null) {
-            parents.set(current.left, current)
-            queue.push(current.left)
+    while (queue.length !== 0) {
+        let currNode = queue.shift()
+        if (currNode.left) {
+            parents.set(currNode.left, currNode)
+            queue.push(currNode.left)
         }
-        if (current.right !== null) {
-            parents.set(current.right, current)
-            queue.push(current.right)
+        if (currNode.right) {
+            parents.set(currNode.right, currNode)
+            queue.push(currNode.right)
         }
     }
+    let commonAncestor = p
     const ancestors = new Set()
-    let currAncestor = p
-    while (currAncestor) {
-        ancestors.add(currAncestor)
-        currAncestor = parents.get(currAncestor)
-    }
-    let commonAncestor = q
-    while (!ancestors.has(commonAncestor)) {
+    while (commonAncestor) {
+        ancestors.add(commonAncestor)
         commonAncestor = parents.get(commonAncestor)
     }
+    commonAncestor = q
+    while (!ancestors.has(commonAncestor)) {
+        commonAncestor = parents.get(commonAncestor)
+
+    }
     return commonAncestor
-};
-const lowestCommonAncestor2 = function (root, p, q) {
-    if (!root) {
-        return null
-    }
-    let left = false
-    let right = false
-    let common = false
-    const helper = (node) => {
-        if(!node){
-            return null
-        }
-
-        helper(node.left)
-        helper(node.right)
-
-
-    }
-
 };

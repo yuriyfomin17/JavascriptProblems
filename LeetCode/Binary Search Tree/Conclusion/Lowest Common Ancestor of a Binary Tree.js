@@ -5,6 +5,45 @@
  *     this.left = this.right = null;
  * }
  */
+
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+// Time Complexity is O(N) if tree is completely unbalanced and O(logN) if it is balanced
+// Space Complexity is O(1) since we don't use any extra memory
+const lowestCommonAncestor = function (root, p, q) {
+    const qValue = q.val
+    const pValue = p.val
+    let currNode = root
+    // Traverse the tree
+    while (currNode) {
+        let parentValue = currNode.val
+        if (pValue > parentValue && qValue > parentValue) {
+            // if both p and q are greater than parents
+            currNode = currNode.right
+        } else if (pValue < parentValue && qValue < parentValue) {
+            // if both p and q are less then parents
+            currNode = currNode.left
+        }else {
+            // we Have found the split return lowest common ancestor
+            return currNode
+        }
+    }
+    return null
+};
+
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
 /**
  * @param {TreeNode} root
  * @param {TreeNode} p
@@ -39,11 +78,9 @@ const lowestCommonAncestor = function (root, p, q) {
         commonAncestor = parents.get(commonAncestor)
     }
     commonAncestor = q
-    while (!ancestors.has(commonAncestor)){
+    while (!ancestors.has(commonAncestor)) {
         commonAncestor = parents.get(commonAncestor)
 
     }
     return commonAncestor
-
-
 };
