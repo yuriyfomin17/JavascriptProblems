@@ -47,27 +47,31 @@ var isBalanced = function (root) {
     // Space Complexity: O(H), call stack will possibly go as deep as height
 };
 
-const isBalanced = function (root) {
-    const stack = []
-    const dict = new Map()
-    let currNode = root
-    while (currNode || stack.length !== 0) {
-        while (currNode) {
-            stack.push(currNode)
-            currNode = currNode.left
+var isBalanced = function(root) {
+    if(!root) return true
+    let depth = new Map
+    let s = []
+    let last
+
+    while(root || s.length) {
+        if(root) {
+            s.push(root)
+            root = root.left
+        }else {
+            root = s[s.length-1]
+            if(!root.right || last == root.right) {
+                last = s.pop()
+
+                let left = depth.get(last.left)||0
+                let right = depth.get(last.right)||0
+                if(Math.abs(left-right)>1) return false
+                depth.set(last, 1 + Math.max(left, right))
+
+                root = null
+            }else {
+                root = root.right
+            }
         }
-        let removed = stack.pop()
-
-        let left = dict.get(removed.left) || 0
-        let right = dict.get(removed.right) || 0
-
-        if (Math.abs(left - right) > 1) {
-            return false
-        }
-
-        dict.set(removed, 1 + Math.max(left, right))
-
-        currNode = removed.right
     }
     return true
 };
