@@ -18,8 +18,10 @@ const reachingPoints = function (sx, sy, tx, ty) {
     }
     return false
 };
-
+// Time Complexity is O(log(tx, ty))
+// Space Complexity is O(1)
 const reachingPoints2 = function (sx, sy, tx, ty) {
+    debugger
     while (tx >= sx && ty >= sy) {
         if (tx === ty) {
             break
@@ -41,3 +43,7 @@ const reachingPoints2 = function (sx, sy, tx, ty) {
     }
     return (tx === sx && ty === sy)
 };
+
+console.log(
+    reachingPoints2(1, 1, 3, 5)
+)
