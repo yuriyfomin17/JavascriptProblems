@@ -5,6 +5,9 @@
  * @param {number} c
  * @return {number}
  */
+// TIme Complexity is O(N^2K) where N and K are defined in problem. In each layer we do O(1)
+    // work of N^2 elements on board and K layers are considered
+    // Space Complexity is O(N^2)
 const knightProbability = function (N, K, r, c) {
     const routes = [[-2, -1], [-2, 1], [2, -1], [2, 1], [-1, -2], [1, -2], [-1, 2], [1, 2]];
     let grid = new Array(K + 1).fill(0).map(() => new Array(N).fill(0).map(() => new Array(N)));
@@ -32,13 +35,11 @@ const knightProbability = function (N, K, r, c) {
         for (let row = 0; row < N; row++) {
             for (let col = 0; col < N; col++) {
                 grid[k][row][col] = helper([row, col], k - 1) / 8
-                console.log(grid)
             }
         }
     }
     let answer = 0
 
-    console.log(grid)
     for (let row = 0; row < N; row++) {
         for (let col = 0; col < N; col++) {
             answer += grid[K][row][col]
