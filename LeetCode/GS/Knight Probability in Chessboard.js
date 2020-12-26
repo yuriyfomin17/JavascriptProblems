@@ -6,69 +6,48 @@
  * @return {number}
  */
 const knightProbability = function (N, K, r, c) {
-    if(K===0 && r<=N && c<=N){
-        return 1
-    }
-    const change1 = [1, -1]
-    const change2 = [2, -2]
-    const xRange = N - 1
-    const yRange = N - 1
+    const routes = [[-2, -1], [-2, 1], [2, -1], [2, 1], [-1, -2], [1, -2], [-1, 2], [1, 2]];
+    let grid = new Array(K + 1).fill(0).map(() => new Array(N).fill(0).map(() => new Array(N)));
+    grid[0][r][c] = 1
     debugger
-    const helper = (point) => {
-        const possiblePoints = []
+
+    const helper = (point, k) => {
         const [x, y] = point
-        let count = 0
-        change1.map(el1 => {
-            change2.map(el2 => {
-                let nextX = x + el1
-                let nextY = y + el2
-                if (nextX <= xRange && nextY <= yRange && nextX >= 0 && nextY >= 0) {
-                    count += 1
-                    possiblePoints.push([x + el1, y + el2])
-                }
-                nextX = x + el2
-                nextY = y + el1
-                if (nextX <= xRange && nextY <= yRange && nextX >= 0 && nextY >= 0) {
-                    count += 1
-                    possiblePoints.push([x + el2, y + el1])
-                }
-            })
-        })
-
-        return possiblePoints
-    }
-
-    let probability = 1 / 8
-    const queue = [[r, c]]
-    let sum  = 0
-    while (queue.length !== 0 && K !== 0) {
-        let size = queue.length
-        K -= 1
-        for (let i = 0; i < size && K!==0; i++) {
-            let startProbability
-            let currPoint
-            if (size === 1) {
-                currPoint = queue.shift()
-                startProbability = probability
+        let probability = 0
+        for (let i = 0; i < routes.length; i++) {
+            let [dx, dy] = routes[i]
+            let nextX = x + dx
+            let nextY = y + dy
+            if (nextX < 0 || nextX >= N || nextY < 0 || nextY >= N) {
+                continue
             } else {
-                [startProbability, currPoint] = queue.shift()
+                if (grid[k][nextX][nextY]) {
+                    probability += grid[k][nextX][nextY]
+                }
             }
-
-            const possiblePoints = helper(currPoint)
-            possiblePoints.map(el => {
-                queue.push([startProbability * possiblePoints.length / 8, el])
-            })
-
-
         }
-
+        return probability
     }
-    queue.map(el=>{
-        sum = sum + el[0]
-    })
-    return sum
+    for (let k = 1; k <= K; k++) {
+        for (let row = 0; row < N; row++) {
+            for (let col = 0; col < N; col++) {
+                grid[k][row][col] = helper([row, col], k - 1) / 8
+                console.log(grid)
+            }
+        }
+    }
+    let answer = 0
+
+    console.log(grid)
+    for (let row = 0; row < N; row++) {
+        for (let col = 0; col < N; col++) {
+            answer += grid[K][row][col]
+        }
+    }
+    return answer
 };
 
 console.log(
-    knightProbability(3, 1, 0, 0)
+    knightProbability(3, 2, 0, 0)
 )
+
