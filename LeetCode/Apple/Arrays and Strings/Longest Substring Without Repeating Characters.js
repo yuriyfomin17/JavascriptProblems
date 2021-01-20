@@ -2,6 +2,8 @@
  * @param {string} s
  * @return {number}
  */
+// Time Complexity is O(N) where N is the size of the string
+// Space Complexity is O(K) where K max is the length of the string which is N
 const lengthOfLongestSubstring = function (s) {
     const checker = {}
     let maxString = -Infinity
@@ -19,7 +21,7 @@ const lengthOfLongestSubstring = function (s) {
         }
     }
 
-    return maxString===-Infinity?0:maxString
+    return maxString === -Infinity ? 0 : maxString
 };
 
 console.log(
