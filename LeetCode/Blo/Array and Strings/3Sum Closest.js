@@ -3,7 +3,8 @@
  * @param {number} target
  * @return {number}
  */
-// Time Complex
+// Time Complexity: O(N^2) = O(N^2) + O(NlogN) = O(N^2) as we go through inner loop
+    // SPace Complexity is O(logN) or O(N) depending on the implementation of the sorting algorithm
 const threeSumClosest = function (nums, target) {
     // edge cases
     if (nums.length < 3) return []
