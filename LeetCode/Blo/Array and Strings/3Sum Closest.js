@@ -3,26 +3,33 @@
  * @param {number} target
  * @return {number}
  */
+// Time Complex
 const threeSumClosest = function (nums, target) {
-    nums.sort(function (a, b) {
-        if (a > b) {
-            return 1
-        } else {
-            return -1
-        }
-    })
-    let resultSum = 0
-    for (let i = 0; i < nums.length; i++) {
-        let left = i + 1
-        let right = nums.length - 1
-        while (left < right) {
-            let currentSum = nums[i] + nums[left] + nums[right]
+    // edge cases
+    if (nums.length < 3) return []
+    // sort array to implement O(n) two pointers inside the for loop
+    nums.sort((a, b) => a - b)
+    let result = nums[0] + nums[1] + nums[nums.length - 1]
 
+    for (let i = 0; i < nums.length; i++) {
+        // skip for better performance
+
+        if (i === 0 || (i > 0 && nums[i] !== nums[i - 1])) {
+            // two pointers, O(n)
+            let left = i + 1
+            let right = nums.length - 1
+            while (left < right) {
+                let cur = nums[i] + nums[left] + nums[right]
+                if (cur === target) return cur
+                else if (Math.abs(cur - target) < Math.abs(result - target)) result = cur
+                else if (cur < target) {
+                    left += 1
+                } else {
+                    right -= 1
+                }
+            }
         }
     }
-    return resultSum
+    return result
 };
 
-console.log(
-    threeSumClosest([-1, 2, 1, -4], 1)
-)
