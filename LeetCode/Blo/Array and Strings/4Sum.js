@@ -3,6 +3,9 @@
  * @param {number} target
  * @return {number[][]}
  */
+// Time complexity is O(n^k-1) or O(N^3) for 4Sum. We have k-2 loops and twoSUm is O(N)
+    // Space Complexity is O(N). We need O(K) sapce for the recursion. k can be the same as n in the worst case
+    // for the generalized algorithm
 const fourSum = function (nums, target) {
     debugger
     nums.sort(function (a, b) {
