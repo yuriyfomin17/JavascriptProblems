@@ -18,9 +18,7 @@ const productExceptSelf = function (nums) {
     }
     return array
 };
-console.log(
-    productExceptSelf([1, 2, 3, 4])
-)
+
 
 /**
  * @param {number[]} nums
@@ -28,7 +26,8 @@ console.log(
  */
 // Time Complexity is O(N) where N is the number of elements in the input array
     // Space complexity is O(1)
-const productExceptSelf = function (nums) {
+const productExceptSelf2 = function (nums) {
+        debugger
         // the length of the input array
         const length = nums.length
 
@@ -60,3 +59,7 @@ const productExceptSelf = function (nums) {
         }
         return answer
     };
+
+console.log(
+    productExceptSelf2([1, 2, 3, 4])
+)
