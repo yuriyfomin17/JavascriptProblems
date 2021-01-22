@@ -2,7 +2,8 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-const permute = function (nums) {
+const permute1 = function (nums) {
+    debugger
     const output = [];
     /**
      * The goal is break down the problem by finding permutations in subarrays.
@@ -30,3 +31,41 @@ const permute = function (nums) {
 
     return output;
 };
+
+console.log(
+    permute1(
+        [1, 2, 3]
+    )
+)
+
+var permute = function (nums) {
+    let res = [], used = new Array(nums.length).fill(false);
+
+    function permuteHelper(depth, used, cur) {
+        if (depth === nums.length) {
+            res.push(cur.slice());
+            return;
+        }
+        for (let i = 0; i < nums.length; i++) {
+            if (used[i] === false) { // nums[i] is already being used
+                cur.push(nums[i]);
+                used[i] = true;
+
+                // move to the next depth
+                permuteHelper(depth + 1, used, cur);
+
+                // backtrack to previous state
+                cur.pop();
+                used[i] = false; // nums[i] is no more being used
+            }
+        }
+    }
+
+    permuteHelper(0, used, []);
+    return res;
+    // Time Complexity: O(N!)
+    // Space Complexity: O(N); our function call stack will go as deep as the number of elements to permute, and since
+    // in this question we use all elements (N) to permute, the space complexity is O(N)
+};
+
+
