@@ -1,22 +1,25 @@
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+// Space Complexity: O(2n) = O(n); call stack
 const generateParenthesis = function (n) {
-    let res = [];
+    const result = []
     debugger
-    function permute(open, close, cur) {
-        if (cur.length === 2 * n) {
-            res.push(cur);
-            return;
+    const permutation = (open, close, curr) => {
+        if (curr.length === 2 * n) {
+            result.push(curr)
+            return
         }
         if (open > 0) {
-            permute(open - 1, close + 1, cur + "(");
+            permutation(open - 1, close+1 , curr + "(")
         }
         if (close > 0) {
-            permute(open, close - 1, cur + ")");
+            permutation(open, close - 1, curr + ")")
         }
     }
-
-    permute(n, 0, "");
-    return res;
-    // Space Complexity: O(2n) = O(n); call stack
+    permutation(n, 0, '')
+    return result
 };
 
 console.log(
