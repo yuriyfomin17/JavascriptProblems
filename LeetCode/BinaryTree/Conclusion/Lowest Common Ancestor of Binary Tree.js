@@ -15,6 +15,9 @@
 // Time Complexity is O(N) if tree is completely unbalanced and O(logN) if it is balanced
 // Space Complexity is O(1) since we don't use any extra memory
 const lowestCommonAncestor = function (root, p, q) {
+    if(!root){
+        return null
+    }
     const qValue = q.val
     const pValue = p.val
     let currNode = root
