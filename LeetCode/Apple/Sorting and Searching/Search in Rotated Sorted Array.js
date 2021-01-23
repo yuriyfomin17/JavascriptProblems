@@ -4,6 +4,9 @@
  * @param {number} target
  * @return {number}
  */
+// 2 Traversals
+    // Time Complexity is O(lognN)
+    // Space Complexity is O(1)
 const search = function (nums, target) {
     let left = 0
     let right = nums.length - 1
