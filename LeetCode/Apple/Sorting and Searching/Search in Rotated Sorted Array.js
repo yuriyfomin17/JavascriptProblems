@@ -6,7 +6,7 @@
 // 2 Traversals
     // Time Complexity is O(lognN)
     // Space Complexity is O(1)
-const search = function (nums, target) {
+const search1 = function (nums, target) {
         let left = 0
         let right = nums.length - 1
         let pivot = 0
@@ -57,28 +57,39 @@ const search = function (nums, target) {
  * @param {number} target
  * @return {number}
  */
-const search2 = function (nums, target) {
-    let left = 0
-    let right = nums.length - 1
+const search = function (nums, target) {
+    if (nums.length === 0) {
+        return -1
+    }
     debugger
-    while (left < right) {
-        let guess = Math.floor((left + right) / 2)
-        if (nums[guess] === target) {
-            return guess
-        } else if (nums[guess] > nums[0] && target > nums[guess]) {
-            left = guess + 1
-        }else if(nums[guess] > nums[0] && target < nums[guess]){
-            right = guess
-        }else if(nums[guess] < nums[0] && target < nums[guess]){
-            right = guess
-        }else if(nums[guess] < nums[0] && target < nums[guess]){
-
+    let start = 0
+    let end = nums.length - 1
+    if (start === end && nums[start] === target) {
+        return start
+    }
+    while (start <= end) {
+        let mid = Math.floor((start + end) / 2)
+        if (target === nums[mid]) {
+            return mid
+        } else if (nums[mid] >= nums[start]) {
+            if (target >= nums[start] && target <= nums[mid]) {
+                end = mid - 1
+            } else {
+                start = mid + 1
+            }
+        } else {
+            if (target <= nums[end] && target > nums[mid]) {
+                start = mid + 1
+            } else {
+                end = mid - 1
+            }
         }
     }
     return -1
 };
 
 console.log(
-    search2([4, 5, 6, 7, 0, 1, 2],
-        0)
+    search(
+        [4, 5, 6, 7, 0, 1, 2], 0
+    )
 )
